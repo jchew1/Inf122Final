@@ -13,10 +13,10 @@ public class TicTacToeGL extends GameLogic
 	               }
 	           }
 		   }
-	   public int getx(){
+	   public int getboardx(){
 		   return width;
 	   }
-	   public int gety(){
+	   public int getboardy(){
 		   return height;
 	   }
 	   public boolean isBoardFull(){
