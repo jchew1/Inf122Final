@@ -1,12 +1,11 @@
-public class TicTacToeGL
+public class TicTacToeGL extends GameLogic
 {
 	   private char[][] board; 
 	   
 	   private char currentPlayerMark;
-	   
+	   private int width = 3;
+	   private int height = 3;
 	   public TicTacToeGL() {
-		   
-		   board = new char[3][3];
 		   currentPlayerMark = 'X';
 		   for (int i = 0; i < 3; i++) {
 			   for (int j = 0; j < 3; j++) {
@@ -14,16 +13,12 @@ public class TicTacToeGL
 	               }
 	           }
 		   }
-//	   public void printBoard() {
-//		   System.out.println("-------------");
-//	       for (int i = 0; i < 3; i++) {
-//	               for (int j = 0; j < 3; j++) {
-//	                   System.out.print(board[i][j] + " | ");
-//	                   }
-//	               System.out.println();   
-//	               System.out.println("-------------");
-//	               }
-//	       }
+	   public int getx(){
+		   return width;
+	   }
+	   public int gety(){
+		   return height;
+	   }
 	   public boolean isBoardFull(){
 		   boolean isFull = true;
 		   for(int i = 0; i<3;i++){
@@ -101,7 +96,16 @@ public class TicTacToeGL
 		   }
 		   return false;
 	   }
-	 public char getTurn(){
-		   return currentPlayerMark;
+	   public int getTurn(){
+		   	return currentPlayerMark;
 		   }
-}
+	void boardConstructor(int width, int height)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+	void getUserMove()
+	{
+		// TODO Auto-generated method stub
+		
+	}
