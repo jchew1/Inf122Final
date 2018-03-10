@@ -1,4 +1,3 @@
-import java.util.Scanner;
 import java.util.HashMap;
 
 class Driver{
@@ -17,13 +16,10 @@ class Driver{
 	}
 
 	public static void main(String[] args){
-		Scanner scan = new Scanner(System.in);
-		System.out.print("Player1 Username: ");
-		user1 = getUser(scan.nextLine());
-		System.out.print("Player2 Username: ");
-		user2 = getUser(scan.nextLine());
+		MainMenu main = new MainMenu(500,200,"Main Menu");
+		
+		//new GameGUI(500,500,"newgame",7,7);
 
-		scan.close();
 	}
 }
 
