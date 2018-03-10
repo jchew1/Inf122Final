@@ -16,14 +16,14 @@ public class GameGUI extends JFrame{
 		super(title);
 		setSize(width, height);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 
 		boardPanel.setLayout(new GridLayout(x,y));
 		for(int i=0; i<x; i++){
 			tiles.add(new ArrayList<BoardTile>());
 			for(int j=0; j<y; j++){
-				tiles.get(i).add(new BoardTile());
+				tiles.get(i).add(new BoardTile(i,j));
 				boardPanel.add(tiles.get(i).get(j));
 			}
 		}

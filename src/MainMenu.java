@@ -15,6 +15,7 @@ public class MainMenu extends JFrame{
 	JTextField p1t = new JTextField(20);
 	JTextField p2t = new JTextField(20);
 	String[] games = new String[]{"TicTacToe", "Stratego", "Pente", "Battleship"};
+	JComboBox<String> gamesList = new JComboBox<String>(games);
 
 	MainMenu(int width, int height, String title){
 		super(title);
@@ -57,7 +58,6 @@ public class MainMenu extends JFrame{
 		JPanel gamesPanel = new JPanel();
 		
 		JPanel gamesListPanel = new JPanel();
-		JComboBox<String> gamesList = new JComboBox<String>(games);
 		gamesListPanel.add(gamesList);
 
 		JPanel startPanel = new JPanel();
@@ -79,7 +79,10 @@ public class MainMenu extends JFrame{
 
 	void startButtonPressed(){
 		System.out.println("start button pressed");
-		getUsernames();
+		Driver.getUser(p1t.getText());
+		Driver.getUser(p2t.getText());
+		Driver.currentGame = (String)gamesList.getSelectedItem();
+		setVisible(false);
 	}
 
 	void getUsernames(){

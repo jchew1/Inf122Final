@@ -3,10 +3,10 @@ abstract class GameLogic{
 	Board board;
 	int turn;
 
-	abstract void boardConstructor(int width, int height);
+	abstract void boardConstructor();
 	abstract void getUserMove();
 	abstract void checkValidMove();
-	abstract void makeMove();
+	abstract void makeMove(int x, int y);
 	abstract void checkEnd();
 
 	void changeTurn(){
@@ -15,4 +15,9 @@ abstract class GameLogic{
  
 	//getters and setters
 	int getTurn(){return turn;}
+	int getBoardX(){return board.getWidth();}
+	int getBoardY(){return board.getHeight();}
+		
+		
+	
 }
