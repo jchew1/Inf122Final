@@ -1,9 +1,6 @@
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -24,6 +21,7 @@ public class GameGUI extends JFrame{
 			tiles.add(new ArrayList<BoardTile>());
 			for(int j=0; j<y; j++){
 				tiles.get(i).add(new BoardTile(i,j));
+				tiles.get(i).get(j).setImage("emptySquare.png");
 				boardPanel.add(tiles.get(i).get(j));
 			}
 		}

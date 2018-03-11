@@ -20,12 +20,12 @@ class BoardTile extends JButton implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		System.out.printf("Tile Pressed %d,%d\n", x, y);
 		Driver.game.makeMove(x,y);
-		setImage("whiteSquare.bmp");
+		setImage(Driver.game.board.pieces[x][y].getIcon());
 	}
 
 	void setImage(String icon){
 		try{
-			Image img = ImageIO.read(getClass().getResource(icon));
+			Image img = ImageIO.read(getClass().getResource("resources/" + icon));
 			this.setIcon(new ImageIcon(img));
 		}catch(Exception e){
 			System.out.println(e);

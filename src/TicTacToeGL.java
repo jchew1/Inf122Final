@@ -1,10 +1,15 @@
 public class TicTacToeGL extends GameLogic
 {
 	public TicTacToeGL() {
+		turn = 0;
+		boardConstructor();
+	}
+
+	public void boardConstructor(){
 		board = new Board(3,3);
 		for(int i=0; i<board.getWidth(); i++){
 			for(int j=0; j<board.getHeight(); j++){
-				board.pieces[i][j] = new Piece(-1, "whiteSquare.bmp");
+				board.pieces[i][j] = new TicTacToePiece(-1);
 			}
 		}
 	}
@@ -78,6 +83,4 @@ public class TicTacToeGL extends GameLogic
 		}
 		return false;
 	}
-
-	public void boardConstructor(){}
 }
