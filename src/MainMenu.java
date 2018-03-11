@@ -21,7 +21,7 @@ public class MainMenu extends JFrame{
 		super(title);
 		setSize(width, height);
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));

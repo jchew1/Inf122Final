@@ -30,22 +30,19 @@ class Driver{
 		}
 		switch(currentGame){
 			case "TicTacToe":
-				/*
-				GameLogic game = new TicTacToeGL();
-				GameGUI gg = new GameGUI(1000,1000,"TicTacToe", game.getBoardX(), game.getBoardY());
-				while(game.checkEnd()==false){
-					game.makeMove(x,y);				
-				}
-				*/
+				game = new TicTacToeGL();
 				break;
 			case "Pente":
+				//game = new PenteGL();
 				break;
 			case "Battleship":
+				//game = new BattleshipGL();
 				break;
 			case "Stratego":
+				//game = new StrategoGL();
 				break;
 		}
-		new GameGUI(500,500,"newgame",7,7);
+		GameGUI gg = new GameGUI(1000,1000,currentGame, game.getBoardX(), game.getBoardY());
 
 	}
 }

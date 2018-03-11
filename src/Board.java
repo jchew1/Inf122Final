@@ -3,15 +3,12 @@ import java.util.ArrayList;
 class Board{
 	int width;
 	int height;
-	ArrayList<ArrayList<Piece>> pieces;
+	Piece[][] pieces;
 
 	Board(int width, int height){
 		this.width = width;
 		this.height = height;
-		pieces = new ArrayList<ArrayList<Piece>>();
-		for(int i=0; i<height; i++){
-			pieces.add(new ArrayList<Piece>());
-		}
+		pieces = new Piece[width][height];
 	}
 
 	int getWidth(){return width;}

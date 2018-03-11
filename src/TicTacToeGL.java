@@ -1,111 +1,83 @@
 public class TicTacToeGL extends GameLogic
 {
-	   private char[][] board; 
-	   
-	   private char currentPlayerMark;
-	   private int width = 3;
-	   private int height = 3;
-	   public TicTacToeGL() {
-		   currentPlayerMark = 'X';
-		   for (int i = 0; i < 3; i++) {
-			   for (int j = 0; j < 3; j++) {
-				   board[i][j] = ' ';	   
-	               }
-	           }
-		   }
-	   public int getboardx(){
-		   return width;
-	   }
-	   public int getboardy(){
-		   return height;
-	   }
-	   public boolean isBoardFull(){
-		   boolean isFull = true;
-		   for(int i = 0; i<3;i++){
-			   for(int j = 0; j<3;j++){
-				   if (board[i][j] == ' '){
-					   isFull = false;
-					   }
-			   }
-		   }
-		   return isFull;
-	   }
-	   
-	   public boolean checkForWin() {
-		   if((checkRowsForWin() || checkColumnsForWin() || checkDiagonalsForWin())){
-			   return true;
-		   }
-		   return false;
-		   }
-	   
-	   private boolean checkColumnsForWin() {
-		   for (int i = 0; i < 3; i++) {
-			   if (checkRowCol(board[0][i], board[1][i], board[2][i]) == true) {
-				   return true;
-				   }
-		   }
-		   return false;
-	   }
-	   
-	   private boolean checkRowsForWin() {
-		   for (int i = 0; i < 3; i++) {
-			   if (checkRowCol(board[i][0], board[i][1], board[i][2]) == true) {
-				   return true;
-				   }
-			   }
-		   return false;
-		   }
-
-	   private boolean checkRowCol(char c1, char c2, char c3) {
-		   if ((c1 != ' ') && (c1 == c2) && (c2 == c3)){
-			   return true;
-		   }
-		   return false;
+	public TicTacToeGL() {
+		board = new Board(3,3);
+		for(int i=0; i<board.getWidth(); i++){
+			for(int j=0; j<board.getHeight(); j++){
+				board.pieces[i][j] = new Piece(-1, "whiteSquare.bmp");
+			}
 		}
-	   
-	   private boolean checkDiagonalsForWin() {
-		   return ((checkRowCol(board[0][0], board[1][1], board[2][2]) == true) || (checkRowCol(board[0][2], board[1][1], board[2][0]) == true));
-	   }
-	   public void changeTurn() {
-		   if (currentPlayerMark == 'X') {
-			   currentPlayerMark = 'O';
-			   }
-		   else {
-			   currentPlayerMark = 'X';
-		   }
-		   }
-	   
-	   public boolean checkValidMove(int row, int col){
-		   if ((row >= 0) && (row < 3)) {
-			   if ((col >= 0) && (col < 3)) {
-				   if (board[row][col] == ' ') {
-					   return true;
-				   }
-			   }
-		   }
-		   return false;
-	   }
-	   
-	   public void makeMove(int row, int col) {         
-		   board[row][col] = currentPlayerMark;
-		   }
-	   
-	   public boolean checkEnd(){
-		   if (checkForWin()==true || isBoardFull()==true){
-			   return true;
-		   }
-		   return false;
-	   }
-	   public int getTurn(){
-		   	return currentPlayerMark;
-		   }
-	void boardConstructor(int width, int height)
-	{
-		// TODO Auto-generated method stub
-		
 	}
-	void getUserMove()
-	{
-		// TODO Auto-generated method stub
-		
+
+	public boolean isBoardFull(){
+		for(int i = 0; i<3;i++){
+			for(int j = 0; j<3;j++){
+				if (board.pieces[i][j].player == -1){ 
+					return false;
+				}
+			}
+		}
+		return true;
 	}
+	   
+	public boolean checkForWin() {
+		if((checkRowsForWin() || checkColumnsForWin() || checkDiagonalsForWin())){
+			return true;
+		}
+		return false;
+	}
+	   
+	private boolean checkColumnsForWin() {
+		for (int i = 0; i < 3; i++) {
+			if (checkRowCol(board.pieces[0][i], board.pieces[1][i], board.pieces[2][i]) == true) {
+				return true;
+			}
+		}
+		return false;
+	}
+	   
+	private boolean checkRowsForWin() {
+		for (int i = 0; i < 3; i++) {
+			if (checkRowCol(board.pieces[i][0], board.pieces[i][1], board.pieces[i][2]) == true) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+   
+	private boolean checkDiagonalsForWin() {
+		return ((checkRowCol(board.pieces[0][0], board.pieces[1][1], board.pieces[2][2]) == true) || (checkRowCol(board.pieces[0][2], board.pieces[1][1], board.pieces[2][0]) == true));
+	}
+   
+	private boolean checkRowCol(Piece c1, Piece c2, Piece c3) {
+		if ((c1.player != -1) && (c1.player == c2.player) && (c2.player == c3.player)){
+			return true;
+		}
+		return false;
+	}
+
+	public boolean checkValidMove(int x, int y){
+		return board.pieces[x][y].player == -1;
+	}
+	   
+	public void makeMove(int row, int col) {         
+		if(checkValidMove(row, col)){
+			board.pieces[row][col].setPlayer(turn);
+			if(checkEnd()){
+				return;
+			}
+			changeTurn();
+		}
+	}
+	   
+	public boolean checkEnd(){
+		if (checkForWin()==true || isBoardFull()==true){
+			System.out.println("game finished");
+			return true;
+		}
+		return false;
+	}
+
+	public void boardConstructor(){}
+}

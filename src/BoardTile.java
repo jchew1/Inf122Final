@@ -1,6 +1,9 @@
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 
 class BoardTile extends JButton implements ActionListener{
 
@@ -17,6 +20,16 @@ class BoardTile extends JButton implements ActionListener{
 	public void actionPerformed(ActionEvent e){
 		System.out.printf("Tile Pressed %d,%d\n", x, y);
 		Driver.game.makeMove(x,y);
+		setImage("whiteSquare.bmp");
+	}
+
+	void setImage(String icon){
+		try{
+			Image img = ImageIO.read(getClass().getResource(icon));
+			this.setIcon(new ImageIcon(img));
+		}catch(Exception e){
+			System.out.println(e);
+		}
 	}
 
 }

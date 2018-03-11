@@ -3,11 +3,10 @@ abstract class GameLogic{
 	Board board;
 	int turn;
 
-	abstract void boardConstructor();
-	abstract void getUserMove();
-	abstract void checkValidMove();
-	abstract void makeMove(int x, int y);
-	abstract void checkEnd();
+	public abstract void boardConstructor();
+	public abstract boolean checkValidMove(int x, int y);
+	public abstract void makeMove(int x, int y);
+	public abstract boolean checkEnd();
 
 	void changeTurn(){
 		turn = turn^1;
