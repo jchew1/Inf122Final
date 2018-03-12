@@ -21,7 +21,6 @@ public class GameGUI extends JFrame{
 			tiles.add(new ArrayList<BoardTile>());
 			for(int j=0; j<y; j++){
 				tiles.get(i).add(new BoardTile(i,j));
-				tiles.get(i).get(j).setImage("emptySquare.png");
 				boardPanel.add(tiles.get(i).get(j));
 			}
 		}

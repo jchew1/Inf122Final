@@ -14,7 +14,7 @@ class BoardTile extends JButton implements ActionListener{
 		this.x = x;
 		this.y = y;
 		addActionListener(this);
-		
+		setImage(Driver.game.board.pieces[x][y].getIcon());
 	}
 	
 	public void actionPerformed(ActionEvent e){
