@@ -33,7 +33,7 @@ class Driver{
 				game = new TicTacToeGL();
 				break;
 			case "Pente":
-				// game = new PenteGL();
+			    game = new PenteGL();
 				break;
 			case "Simon Says":
 				game = new SimonSaysGL();
@@ -43,7 +43,6 @@ class Driver{
 				break;
 		}
 		GameGUI gg = new GameGUI(1000,1000,currentGame, game.getBoardX(), game.getBoardY());
-
 	}
 }
 
