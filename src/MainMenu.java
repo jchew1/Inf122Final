@@ -14,7 +14,7 @@ public class MainMenu extends JFrame{
 	JPanel mainPanel = new JPanel();
 	JTextField p1t = new JTextField(20);
 	JTextField p2t = new JTextField(20);
-	String[] games = new String[]{"TicTacToe", "Stratego", "Pente", "Battleship"};
+	String[] games = new String[]{"TicTacToe", "Stratego", "Pente", "Simon Says"};
 	JComboBox<String> gamesList = new JComboBox<String>(games);
 
 	MainMenu(int width, int height, String title){

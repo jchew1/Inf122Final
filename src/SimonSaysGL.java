@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class SimonSaysGL extends GameLogic
 {
 
-	boolean end = false;
 	boolean[] counters = {false,false};
 	ArrayList<ArrayList<String>> player_colors = new ArrayList<ArrayList<String>>();
 
@@ -28,53 +27,47 @@ public class SimonSaysGL extends GameLogic
 	public boolean checkValidMove(int x, int y){
 		return true;
 	}
-
-	public boolean checkEquals(){
-		// System.out.println(player_colors.get(0));
-		// System.out.println(player_colors.get(1));
-		return (player_colors.get(0).equals(player_colors.get(1)));
-	}
 	   
 	public void makeMove(int row, int col) { 
 
 		System.out.println("TURN = " + turn);
 
 		if (player_colors.get(0).isEmpty()){
-			System.out.println("set new");
 			player_colors.get(0).add(board.pieces[row][col].getIcon());
 			changeTurn();
 		}
 
 		else{
-			if (counters[turn] == false){
+			// if it is current player's turn to start matching pattern
+			if (counters[turn] == false){ 
 				player_colors.get(turn).clear();
 				player_colors.get(turn).add(board.pieces[row][col].getIcon());	
 				counters[turn] = true;
 			}
-			else{
+			else{ // add in next color of current player's pattern
+
+				// if have not added up to size of opposing player's pattern to be matched
 				if (player_colors.get(turn).size() < player_colors.get(turn^1).size()){
 					player_colors.get(turn).add(board.pieces[row][col].getIcon());				
 				}
 				else{
-					if (checkEquals()){
-						player_colors.get(turn).add(board.pieces[row][col].getIcon());
+					// finished attempt to match opposing player's pattern
+					// check if attempt matches
+					if (checkEnd()){ 
+						player_colors.get(turn).add(board.pieces[row][col].getIcon()); // extend the pattern
 						counters[turn] = false;	
 						changeTurn();
 					}
 					else{
-						end = true;
+						// pattern is messed up, game over
+						System.out.println("END GAME");
+						return;
 					}
 				}
-
-
 			}
 
 		}
 
-		if (checkEnd()){
-			System.out.println("END GAME");
-			return;
-		}
 
 		System.out.println(player_colors.get(0));
 		System.out.println(player_colors.get(1));
@@ -83,6 +76,8 @@ public class SimonSaysGL extends GameLogic
 	}
 	   
 	public boolean checkEnd(){
-		return end;
+		// true means pattern matched, game continues
+		// false means pattern did not match, game is over
+		return (player_colors.get(0).equals(player_colors.get(1)));
 	}
 }
