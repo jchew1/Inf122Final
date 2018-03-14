@@ -18,13 +18,19 @@ public class PenteGL extends GameLogic {
 	@Override
 	public boolean checkValidMove(int x, int y) {
 		// TODO Auto-generated method stub
-		return false;
+		return board.pieces[x][y].player == -1;
 	}
 
 	@Override
 	public void makeMove(int x, int y) {
 		// TODO Auto-generated method stub
-
+		if(checkValidMove(x,y)) {
+			board.pieces[x][y].setPlayer(turn);
+			if(checkEnd()){
+				return;
+			}
+			changeTurn();
+		}
 	}
 
 	@Override

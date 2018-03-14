@@ -1,5 +1,5 @@
 class PentePiece extends Piece {
-	String[] icons = {"penteblack.png", "pentewhite.png", "pentecross.png"};
+	String[] icons = {"blackCircle.png", "whiteCircle.png", "emptySquare.png"};
 	PentePiece(int player){
 		super(player);
 	}
@@ -7,7 +7,7 @@ class PentePiece extends Piece {
 	String getIcon() {
 		// TODO Auto-generated method stub
 		if(player == -1) {		
-			return icons[2];
+			return icons[0];
 		}
 		return icons[player];
 	}
