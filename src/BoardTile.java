@@ -15,6 +15,7 @@ class BoardTile extends JButton implements ActionListener{
 		this.y = y;
 		addActionListener(this);
 		setImage(Driver.game.board.pieces[x][y].getIcon());
+		System.out.println(getWidth());
 	}
 	
 	public void actionPerformed(ActionEvent e){
@@ -25,7 +26,7 @@ class BoardTile extends JButton implements ActionListener{
 
 	void setImage(String icon){
 		try{
-			Image img = ImageIO.read(getClass().getResource("resources/" + icon));
+			Image img = ImageIO.read(getClass().getResource("resources/blue.png"/* + icon*/));
 			this.setIcon(new ImageIcon(img));
 		}catch(Exception e){
 			System.out.println(e);
