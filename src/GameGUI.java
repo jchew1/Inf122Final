@@ -3,6 +3,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
+import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -39,6 +40,8 @@ public class GameGUI extends JFrame{
 	}
 
 	void setScorePanel(){
+		scorePanel.setLayout(new BoxLayout(scorePanel, BoxLayout.Y_AXIS));
+
 		JPanel p1Panel = new JPanel();
 		JPanel p2Panel = new JPanel();
 
