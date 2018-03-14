@@ -16,6 +16,7 @@ abstract class GameLogic{
 	int getTurn(){return turn;}
 	int getBoardX(){return board.getWidth();}
 	int getBoardY(){return board.getHeight();}
+	
 		
 		
 	

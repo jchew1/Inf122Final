@@ -33,10 +33,10 @@ class Driver{
 				game = new TicTacToeGL();
 				break;
 			case "Pente":
-				game = new SimonSaysGL();
+				//game = new Pente();
 				break;
-			case "Battleship":
-				//game = new BattleshipGL();
+			case "SimonSays":
+				game = new SimonSaysGL();
 				break;
 			case "Stratego":
 				//game = new StrategoGL();
