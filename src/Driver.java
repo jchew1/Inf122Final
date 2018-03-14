@@ -33,9 +33,15 @@ class Driver{
 				game = new TicTacToeGL();
 				break;
 			case "Pente":
+<<<<<<< HEAD
 				//game = new Pente();
 				break;
 			case "SimonSays":
+=======
+				// game = new PenteGL();
+				break;
+			case "Simon Says":
+>>>>>>> 3319d949f9f756f5c8f0c47c150293513c77b356
 				game = new SimonSaysGL();
 				break;
 			case "Stratego":
