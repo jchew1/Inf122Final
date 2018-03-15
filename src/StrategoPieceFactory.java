@@ -17,36 +17,162 @@ public class StrategoPieceFactory {
 	public static final String SPY = "spy";
 	
 	//for reference: player, selectable, targetable, rank
+	//red = 0, green/blue = 1
 	public static StrategoPiece createPiece(String tag, int player){
+		StrategoPiece piece;
 		switch(tag){
 			case "empty":
-				return new StrategoPiece(-1, false, true, 'e');
+				piece = new StrategoPiece(-1, false, true, 'e', EMPTY);
+				piece.setIcon("emptySquare.png");
+				piece.setHiddenIcon("emptySquare.png");
+				piece.setSelectedIcon("emptySquare.png");
+				return piece;
 			case "water":
-				return new StrategoPiece(-1, false, false, 'w');
+				piece = new StrategoPiece(-1, false, false, 'w', WATER);
+				piece.setIcon("blue.png");
+				piece.setHiddenIcon("blue.png");
+				piece.setSelectedIcon("blue.png");
+				return piece;
 			case "flag":
-				return new StrategoPiece(player, false, true, 'f');
+				piece = new StrategoPiece(player, false, true, 'f', FLAG);
+				if(player == 0){
+					piece.setIcon("Stratego_F_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+				} else{
+					piece.setIcon("Stratego_F_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+				}
+				return piece;
 			case "bomb":
-				return new StrategoPiece(player, false, true, 'b');
+				piece = new StrategoPiece(player, false, true, 'b', BOMB);
+				if(player == 0){
+					piece.setIcon("Stratego_B_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+				} else{
+					piece.setIcon("Stratego_B_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+				}
+				return piece;
 			case "marshal":
-				return new StrategoPiece(player, true, true, '0');
+				piece = new StrategoPiece(player, true, true, '0', MARSHAL);
+				if(player == 0){
+					piece.setIcon("Stratego_1_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_1_R_H.png");
+				} else{
+					piece.setIcon("Stratego_1_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_1_R_H.png");
+				}
+				return piece;
 			case "general":
-				return new StrategoPiece(player, true, true, '1');
+				piece = new StrategoPiece(player, true, true, '1', GENERAL);
+				if(player == 0){
+					piece.setIcon("Stratego_2_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_2_R_H.png");
+				} else{
+					piece.setIcon("Stratego_2_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_2_R_H.png");
+				}
+				return piece;
 			case "colonel":
-				return new StrategoPiece(player, true, true, '2');
+				piece = new StrategoPiece(player, true, true, '2', COLONEL);
+				if(player == 0){
+					piece.setIcon("Stratego_3_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_3_R_H.png");
+				} else{
+					piece.setIcon("Stratego_3_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_3_R_H.png");
+				}
+				return piece;
 			case "major":
-				return new StrategoPiece(player, true, true, '3');
+				piece = new StrategoPiece(player, true, true, '3', MAJOR);
+				if(player == 0){
+					piece.setIcon("Stratego_4_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_4_R_H.png");
+				} else{
+					piece.setIcon("Stratego_4_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_4_R_H.png");
+				}
+				return piece;
 			case "captain":
-				return new StrategoPiece(player, true, true, '4');
+				piece = new StrategoPiece(player, true, true, '4', CAPTAIN);
+				if(player == 0){
+					piece.setIcon("Stratego_5_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_5_R_H.png");
+				} else{
+					piece.setIcon("Stratego_5_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_5_R_H.png");
+				}
+				return piece;
 			case "lieutenant":
-				return new StrategoPiece(player, true, true, '5');
+				piece = new StrategoPiece(player, true, true, '5', LIEUTENANT);
+				if(player == 0){
+					piece.setIcon("Stratego_6_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_6_R_H.png");
+				} else{
+					piece.setIcon("Stratego_6_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_6_R_H.png");
+				}
+				return piece;
 			case "sergeant":
-				return new StrategoPiece(player, true, true, '6');
+				piece = new StrategoPiece(player, true, true, '6', SERGEANT);
+				if(player == 0){
+					piece.setIcon("Stratego_7_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_7_R_H.png");
+				} else{
+					piece.setIcon("Stratego_7_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_7_R_H.png");
+				}
+				return piece;
 			case "miner":
-				return new StrategoPiece(player, true, true, '7');
+				piece = new StrategoPiece(player, true, true, '7', MINER);
+				if(player == 0){
+					piece.setIcon("Stratego_8_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_8_R_H.png");
+				} else{
+					piece.setIcon("Stratego_8_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_8_R_H.png");
+				}
+				return piece;
 			case "scout":
-				return new StrategoPiece(player, true, true, '8');
+				piece = new StrategoPiece(player, true, true, '8', SCOUT);
+				if(player == 0){
+					piece.setIcon("Stratego_9_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_9_R_H.png");
+				} else{
+					piece.setIcon("Stratego_9_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_9_R_H.png");
+				}
+				return piece;
 			case "spy":
-				return new StrategoPiece(player, true, true, '9');
+				piece = new StrategoPiece(player, true, true, '9', SPY);
+				if(player == 0){
+					piece.setIcon("Stratego_S_R.png");
+					piece.setHiddenIcon("Stratego_H_R.png");
+					piece.setSelectedIcon("Stratego_S_R_H.png");
+				} else{
+					piece.setIcon("Stratego_S_B.png");
+					piece.setHiddenIcon("Stratego_H_B.png");
+					piece.setSelectedIcon("Stratego_S_R_H.png");
+				}
+				return piece;
 			default:
 				return null;
 		}
