@@ -32,14 +32,13 @@ public class PenteGL extends GameLogic {
 		// TODO Auto-generated method stub
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
+			if(checkEnd()){
+				return;
+			}
 			checkForCaptureRight(x,y);
 			checkForCaptureRight(x,y);
 			checkForCaptureUp(x,y);
 			checkForCaptureDown(x,y);
-			if(checkEnd()){
-				return;
-			}
-
 			whiteOrBlackTurn = (whiteOrBlackTurn == 1) ? 0 : 1;
 			changeTurn();
 		}
@@ -105,7 +104,6 @@ public class PenteGL extends GameLogic {
 			}
 		}
 	}
-	
 	public void checkForCaptureLeft(int x, int y) {
 		//Check all to the right
 		int consecutiveBlack = 0;
@@ -159,7 +157,7 @@ public class PenteGL extends GameLogic {
 				}
 			}
 		}else { //blacks move
-			for(int i = y + 1; i < board.getHeight(); ++i) {
+			for(int i = x + 1; i < board.getHeight(); ++i) {
 				if(board.pieces[i][y].getPlayer() == 0) {
 					consecutiveWhite += 1;
 					removalList.add(new Pair(i, y));
@@ -182,7 +180,7 @@ public class PenteGL extends GameLogic {
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
 		//going right
 		if(whiteOrBlackTurn == 0) { //whites move
-			for(int i = y - 1; i < board.getHeight(); --i) {
+			for(int i = y - 1; i < board.getHeight(); -i) {
 		    		if(board.pieces[x][i].getPlayer() == 1) { 
 					consecutiveBlack += 1;
 					removalList.add(new Pair(i,y));
@@ -194,7 +192,7 @@ public class PenteGL extends GameLogic {
 				}
 			}
 		}else { //blacks move
-			for(int i = y - 1; i < board.getHeight(); --i) {
+			for(int i = x + 1; i < board.getHeight(); ++i) {
 				if(board.pieces[i][y].getPlayer() == 0) {
 					consecutiveWhite += 1;
 					removalList.add(new Pair(i, y));

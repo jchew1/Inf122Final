@@ -32,14 +32,14 @@ public class PenteGL extends GameLogic {
 		// TODO Auto-generated method stub
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
+			if(checkEnd()){
+				return;
+			}
 			checkForCaptureRight(x,y);
 			checkForCaptureRight(x,y);
 			checkForCaptureUp(x,y);
 			checkForCaptureDown(x,y);
-			if(checkEnd()){
-				return;
-			}
-
+			//add right, left, up, down instant win
 			whiteOrBlackTurn = (whiteOrBlackTurn == 1) ? 0 : 1;
 			changeTurn();
 		}

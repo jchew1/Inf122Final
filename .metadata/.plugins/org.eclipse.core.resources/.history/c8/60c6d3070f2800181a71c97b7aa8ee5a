@@ -32,14 +32,10 @@ public class PenteGL extends GameLogic {
 		// TODO Auto-generated method stub
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
-			checkForCaptureRight(x,y);
-			checkForCaptureRight(x,y);
-			checkForCaptureUp(x,y);
-			checkForCaptureDown(x,y);
 			if(checkEnd()){
 				return;
 			}
-
+			checkForCapture(x,y);
 			whiteOrBlackTurn = (whiteOrBlackTurn == 1) ? 0 : 1;
 			changeTurn();
 		}
@@ -105,7 +101,6 @@ public class PenteGL extends GameLogic {
 			}
 		}
 	}
-	
 	public void checkForCaptureLeft(int x, int y) {
 		//Check all to the right
 		int consecutiveBlack = 0;
@@ -140,76 +135,6 @@ public class PenteGL extends GameLogic {
 			}
 		}
 	}
-	public void checkForCaptureDown(int x, int y) {
-		//Check all to the right
-		int consecutiveBlack = 0;
-		int consecutiveWhite = 0;
-		ArrayList<Pair> removalList= new ArrayList<Pair>();
-		//going right
-		if(whiteOrBlackTurn == 0) { //whites move
-			for(int i = y + 1; i < board.getHeight(); ++i) {
-		    		if(board.pieces[x][i].getPlayer() == 1) { 
-					consecutiveBlack += 1;
-					removalList.add(new Pair(i,y));
-		    		}else{
-					if(consecutiveBlack == 2 && board.pieces[i][y].getPlayer() == 0) {
-						removeTwo(removalList);
-					}
-					break;
-				}
-			}
-		}else { //blacks move
-			for(int i = y + 1; i < board.getHeight(); ++i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
-					consecutiveWhite += 1;
-					removalList.add(new Pair(i, y));
-				}else{
-					if(consecutiveWhite == 2 && board.pieces[i][y].getPlayer() == 1) {
-						removeTwo(removalList);
-					}
-					break;
-				
-				}
-			
-			}
-		}
-	}
-	
-	public void checkForCaptureUp(int x, int y) {
-		//Check all to the right
-		int consecutiveBlack = 0;
-		int consecutiveWhite = 0;
-		ArrayList<Pair> removalList= new ArrayList<Pair>();
-		//going right
-		if(whiteOrBlackTurn == 0) { //whites move
-			for(int i = y - 1; i < board.getHeight(); --i) {
-		    		if(board.pieces[x][i].getPlayer() == 1) { 
-					consecutiveBlack += 1;
-					removalList.add(new Pair(i,y));
-		    		}else{
-					if(consecutiveBlack == 2 && board.pieces[i][y].getPlayer() == 0) {
-						removeTwo(removalList);
-					}
-					break;
-				}
-			}
-		}else { //blacks move
-			for(int i = y - 1; i < board.getHeight(); --i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
-					consecutiveWhite += 1;
-					removalList.add(new Pair(i, y));
-				}else{
-					if(consecutiveWhite == 2 && board.pieces[i][y].getPlayer() == 1) {
-						removeTwo(removalList);
-					}
-					break;
-				
-				}
-			
-			}
-		}
-	}	
-	
 	class Pair{
 		int x;
 		int y;
