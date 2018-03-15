@@ -1,0 +1,10 @@
+
+public class PentePiece extends Piece {
+
+	@Override
+	String getIcon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
