@@ -174,8 +174,7 @@ public class PenteGL extends GameLogic {
 		// TODO Auto-generated method stub
 
 		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) 
-		|| winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) 
-		|| userOneCaptures == 5 || userTwoCaptures == 5) {
+		|| winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) || userOneCaptures == 5 || userTwoCaptures == 5) {
 			return true;
 		}
 		return false;

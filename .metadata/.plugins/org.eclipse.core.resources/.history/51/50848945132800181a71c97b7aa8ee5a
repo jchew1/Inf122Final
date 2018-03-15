@@ -173,9 +173,7 @@ public class PenteGL extends GameLogic {
 	public boolean checkEnd(int x, int y) {
 		// TODO Auto-generated method stub
 
-		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) 
-		|| winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) 
-		|| userOneCaptures == 5 || userTwoCaptures == 5) {
+		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) || winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) || userOneCaptures == 5 || userTwoCaptures == 5) {
 			return true;
 		}
 		return false;
