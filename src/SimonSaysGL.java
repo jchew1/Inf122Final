@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class SimonSaysGL extends GameLogic
 {
 
+	boolean end = false;
 	boolean[] counters = {false,false};
 	ArrayList<ArrayList<String>> player_colors = new ArrayList<ArrayList<String>>();
 
@@ -51,7 +52,7 @@ public class SimonSaysGL extends GameLogic
 				else{
 					// finished attempt to match opposing player's pattern
 					// check if attempt matches
-					if (checkEnd()){ 
+					if (checkEquals()){ 
 						player_colors.get(turn).add(board.pieces[row][col].getIcon()); // extend the pattern
 						counters[turn] = false;	
 						changeTurn();
@@ -59,11 +60,16 @@ public class SimonSaysGL extends GameLogic
 					else{
 						// pattern is messed up, game over
 						System.out.println("END GAME");
+						end = true;
 						return null;
 					}
 				}
 			}
 
+		}
+
+		if (checkEnd()){
+			return null;
 		}
 
 
@@ -74,15 +80,17 @@ public class SimonSaysGL extends GameLogic
 
 	}
 	   
-	public boolean checkEnd(){
-		// true means pattern matched, game continues
-		// false means pattern did not match, game is over
+	public boolean checkEquals(){
 		return (player_colors.get(0).equals(player_colors.get(1)));
+	}
+
+	public boolean checkEnd(){
+		return end;
 	}
 
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
 	public int getWinner(){
-		return 0;
+		return turn^1;
 	}
 }
