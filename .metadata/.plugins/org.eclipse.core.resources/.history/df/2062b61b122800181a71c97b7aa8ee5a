@@ -80,24 +80,24 @@ public class PenteGL extends GameLogic {
 		int consWhite = 0;
 		int consBlack = 0;
 		if(whiteOrBlackTurn == 0) {
-			for(int i = x; i >= 0; --i) {
+			for(int i = x; i < board.getWidth(); ++i) {
 				if(board.pieces[x][y].getPlayer() == 0) {
 					consWhite += 1;
 				}else {
 					if(consWhite == 5) {
-						System.out.println("White wins by having 5 pieces in a row towards the left");
+						System.out.println("White wins by having 5 pieces in a row towards the right");
 						return true;
 					}
 					break;
 				}
 			}
 		}else{
-			for(int i = x; i >= 0; --i) {
+			for(int i = x; i < board.getWidth(); ++i) {
 				if(board.pieces[x][y].getPlayer() == 1) {
 					consBlack += 1;
 				}else {
 					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row towards the left");
+						System.out.println("Black wins by having 5 pieces in a row towards the right");
 						return true;
 					}
 					break;
@@ -110,7 +110,7 @@ public class PenteGL extends GameLogic {
 	public boolean checkEnd(int x, int y) {
 		// TODO Auto-generated method stub
 
-		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) || userOneCaptures == 5 || userTwoCaptures == 5) {
+		if(winByGoingFiveRight(x, y) || userOneCaptures == 5 || userTwoCaptures == 5) {
 			return true;
 		}
 		return false;
