@@ -23,7 +23,6 @@ class BoardTile extends JButton implements ActionListener{
 		addActionListener(this);
 		this.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 		setImage(Driver.game.board.pieces[x][y].getIcon());
-		System.out.println(getWidth());
 	}
 	
 	public void actionPerformed(ActionEvent e){
