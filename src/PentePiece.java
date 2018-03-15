@@ -1,5 +1,5 @@
 class PentePiece extends Piece {
-	String[] icons = {"blackCircle.png", "whiteCircle.png", "emptySquare.png"};
+	String[] icons = {"whiteCircle.png", "blackCircle.png", "emptySquare.png"};
 	PentePiece(int player){
 		super(player);
 	}
