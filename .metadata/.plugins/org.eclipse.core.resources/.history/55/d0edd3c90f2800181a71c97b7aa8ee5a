@@ -125,7 +125,7 @@ public class PenteGL extends GameLogic {
 				}
 			}
 		}else { //blacks move
-			for(int i = x - 1; i >= 0; --i) {
+			for(int i = x + 1; i < board.getWidth(); ++i) {
 				if(board.pieces[i][y].getPlayer() == 0) {
 					consecutiveWhite += 1;
 					removalList.add(new Pair(i, y));
