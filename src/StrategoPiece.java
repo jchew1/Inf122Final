@@ -1,21 +1,26 @@
 
 public class StrategoPiece extends Piece {
 	
+	private String name;
 	private String hiddenIcon;
 	private String icon;
+	private String selectedIcon;
 	
+
 	private boolean selectable;
 	private boolean targetable;
 	private char rank;
 	
-	private boolean isHidden = false;
+	private boolean isHidden = true;
+	private boolean isSelected = false;
 	private int currTurn = 0;
 	
-	StrategoPiece(int player, boolean selectable, boolean targetable, char rank) {
+	StrategoPiece(int player, boolean selectable, boolean targetable, char rank, String name) {
 		super(player);
 		this.selectable = selectable;
 		this.targetable = targetable;
 		this.rank = rank;
+		this.name = name;
 	}
 	
 	public boolean isSelectable(){
@@ -26,8 +31,16 @@ public class StrategoPiece extends Piece {
 		return targetable;
 	}
 	
+	public boolean isEmpty(){
+		return rank == 'e';
+	}
+	
 	public char getRank(){
 		return rank;
+	}
+	
+	public String getName(){
+		return name;
 	}
 
 	public void setIcon(String s){
@@ -38,9 +51,8 @@ public class StrategoPiece extends Piece {
 		hiddenIcon = s;
 	}
 	
-	public void setBothIcons(String s){
-		setIcon(s);
-		setHiddenIcon(s);
+	public void setSelectedIcon(String s){
+		selectedIcon = s;
 	}
 	public void setTurn(int t){
 		currTurn = t;
@@ -50,14 +62,19 @@ public class StrategoPiece extends Piece {
 		isHidden = b;
 	}
 	
+	public void setSelected(boolean b){
+		isSelected = b;
+	}
+	
 	@Override
 	public String getIcon() {
+		if (isSelected){
+			return selectedIcon;
+		}
 		if (player == currTurn || !isHidden){
 			return icon;
-		} else{
-			return hiddenIcon;
 		}
-
+		return hiddenIcon;
 	}
 
 }
