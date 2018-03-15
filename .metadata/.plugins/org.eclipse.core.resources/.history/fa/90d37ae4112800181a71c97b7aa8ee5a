@@ -66,7 +66,7 @@ public class PenteGL extends GameLogic {
 					consBlack += 1;
 				}else {
 					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row towards the right");
+						System.out.println("White wins by having 5 pieces in a row towards the right");
 						return true;
 					}
 					break;
