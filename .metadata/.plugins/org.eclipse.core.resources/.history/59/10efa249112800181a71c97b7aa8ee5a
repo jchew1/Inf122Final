@@ -236,7 +236,4 @@ public class PenteGL extends GameLogic {
 			this.y = y;
 		}
 	}
-	//Never using this
-	@Override
-	public boolean checkEnd() {return false;}
 }
