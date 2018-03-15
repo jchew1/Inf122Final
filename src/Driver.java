@@ -50,7 +50,6 @@ class Driver{
 				try{
 					TimeUnit.SECONDS.sleep(1);
 				}catch(Exception e){}
-				System.out.println("game not over");
 			}
 			gameGUI.gameComplete();
 

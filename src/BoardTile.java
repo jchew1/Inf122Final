@@ -32,6 +32,7 @@ class BoardTile extends JButton implements ActionListener{
 		Driver.gameGUI.boardPanel.setVisible(false);
 		if(turnMessage != null){
 			JOptionPane.showMessageDialog(Driver.gameGUI, turnMessage);
+			Driver.gameGUI.updateTiles();
 		}
 		Driver.gameGUI.boardPanel.setVisible(true);
 	}

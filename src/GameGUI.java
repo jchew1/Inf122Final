@@ -88,6 +88,16 @@ public class GameGUI extends JFrame{
 		mainPanel.add(sidePanel);
 	}
 
+	void updateTiles(){
+		for(int i=0; i<tiles.size(); i++){
+			for(int j=0; j<tiles.get(i).size(); j++){
+				int x = tiles.get(i).get(j).x;
+				int y = tiles.get(i).get(j).y;
+				tiles.get(i).get(j).setImage(Driver.game.board.pieces[x][y].getIcon());
+			}
+		}
+	}
+
 	void gameComplete(){
 		switch(Driver.game.getWinner()){
 			case -1:
