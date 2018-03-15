@@ -25,31 +25,31 @@ class Driver{
 		MainMenu main = new MainMenu(500,200,"Main Menu");
 		while(currentGame==null){
 			try{
-			TimeUnit.SECONDS.sleep(1);
+				TimeUnit.SECONDS.sleep(1);
 			}catch(Exception e){}
 		}
+
 		switch(currentGame){
 			case "TicTacToe":
 				game = new TicTacToeGL();
 				break;
 			case "Pente":
-<<<<<<< HEAD
-				//game = new Pente();
+				//game = new PenteGL();
 				break;
 			case "SimonSays":
-=======
-				// game = new PenteGL();
-				break;
-			case "Simon Says":
->>>>>>> 3319d949f9f756f5c8f0c47c150293513c77b356
 				game = new SimonSaysGL();
 				break;
 			case "Stratego":
 				//game = new StrategoGL();
 				break;
 		}
-		GameGUI gg = new GameGUI(1000,1000,currentGame, game.getBoardX(), game.getBoardY());
-
+		GameGUI gg = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
+		while(!game.checkEnd()){
+			try{
+				TimeUnit.SECONDS.sleep(1);
+			}catch(Exception e){}
+			System.out.println("game not over");
+		}
 	}
 }
 

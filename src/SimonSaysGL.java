@@ -80,4 +80,7 @@ public class SimonSaysGL extends GameLogic
 		// false means pattern did not match, game is over
 		return (player_colors.get(0).equals(player_colors.get(1)));
 	}
+
+	public Integer getP1Score(){return null;}
+	public Integer getP2Score(){return null;}
 }

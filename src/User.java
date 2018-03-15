@@ -34,6 +34,11 @@ class User{
 
 	// getters and setters
 	String getName(){return name;}
-	int[] getStats(String game){return stats.get(game);}
+	int[] getStats(String game){
+		if(stats.get(game) == null){
+			stats.put(game, new int[3]);
+		}
+		return stats.get(game);
+	}
 
 }

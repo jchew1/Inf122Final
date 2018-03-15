@@ -79,8 +79,8 @@ public class MainMenu extends JFrame{
 
 	void startButtonPressed(){
 		System.out.println("start button pressed");
-		Driver.getUser(p1t.getText());
-		Driver.getUser(p2t.getText());
+		Driver.user1 = Driver.getUser(p1t.getText());
+		Driver.user2 = Driver.getUser(p2t.getText());
 		Driver.currentGame = (String)gamesList.getSelectedItem();
 		setVisible(false);
 	}

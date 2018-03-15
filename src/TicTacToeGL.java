@@ -83,4 +83,7 @@ public class TicTacToeGL extends GameLogic
 		}
 		return false;
 	}
+	
+	public Integer getP1Score(){return null;}
+	public Integer getP2Score(){return null;}
 }

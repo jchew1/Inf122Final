@@ -2,18 +2,25 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Image;
+import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 
 class BoardTile extends JButton implements ActionListener{
 
 	int x;
 	int y;
+	int buttonWidth;
+	int buttonHeight;
 	
-	BoardTile(int x, int y){
+	BoardTile(int x, int y, int buttonWidth, int buttonHeight){
 		this.x = x;
 		this.y = y;
+		this.buttonWidth = buttonWidth;
+		this.buttonHeight = buttonHeight;
 		addActionListener(this);
+		this.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 		setImage(Driver.game.board.pieces[x][y].getIcon());
 	}
 	
@@ -25,8 +32,9 @@ class BoardTile extends JButton implements ActionListener{
 
 	void setImage(String icon){
 		try{
-			Image img = ImageIO.read(getClass().getResource("resources/" + icon));
-			this.setIcon(new ImageIcon(img));
+			BufferedImage img = ImageIO.read(getClass().getResource("resources/" + icon));
+			Image scaled = img.getScaledInstance(buttonWidth, buttonHeight, java.awt.Image.SCALE_SMOOTH);
+			this.setIcon(new ImageIcon(scaled));
 		}catch(Exception e){
 			System.out.println(e);
 		}
