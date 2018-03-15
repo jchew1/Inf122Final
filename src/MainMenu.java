@@ -69,6 +69,14 @@ public class MainMenu extends JFrame{
 		});
 		startPanel.add(startButton);
 
+		JButton statsButton = new JButton("Stats");
+		statsButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				statsButtonPressed();
+			}
+		});
+		startPanel.add(statsButton);
+
 		gamesPanel.setLayout(new BoxLayout(gamesPanel, BoxLayout.Y_AXIS));
 		gamesPanel.add(gamesListPanel);
 		gamesPanel.add(startPanel);
@@ -85,5 +93,12 @@ public class MainMenu extends JFrame{
 		Driver.users.put(Driver.user2.getName(), Driver.user2);
 		Driver.currentGame = (String)gamesList.getSelectedItem();
 		setVisible(false);
+	}
+
+	void statsButtonPressed(){
+		System.out.println("stats button pressed");
+		Driver.user1 = Driver.getUser(p1t.getText());
+		Driver.user2 = Driver.getUser(p2t.getText());
+		new StatsGUI(Driver.user1, Driver.user2);
 	}
 }

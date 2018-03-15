@@ -42,7 +42,7 @@ class Driver{
 					game = new SimonSaysGL();
 					break;
 				case "Stratego":
-					//game = new StrategoGL();
+					game = new StrategoGL();
 					break;
 			}
 			gameGUI = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
@@ -54,7 +54,6 @@ class Driver{
 			}
 			gameGUI.gameComplete();
 
-			System.out.printf("%s, %s\n",user1.getName(), user2.getName());
 			switch(game.getWinner()){
 				case -1: 
 					user1.addStat(currentGame, 0);
