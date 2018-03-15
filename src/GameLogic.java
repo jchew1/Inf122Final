@@ -5,8 +5,11 @@ abstract class GameLogic{
 
 	public abstract void boardConstructor();
 	public abstract boolean checkValidMove(int x, int y);
-	public abstract void makeMove(int x, int y);
+	public abstract String makeMove(int x, int y);
 	public abstract boolean checkEnd();
+	public abstract Integer getP1Score();
+	public abstract Integer getP2Score();
+	public abstract int getWinner();
 
 	void changeTurn(){
 		turn = turn^1;
@@ -16,7 +19,5 @@ abstract class GameLogic{
 	int getTurn(){return turn;}
 	int getBoardX(){return board.getWidth();}
 	int getBoardY(){return board.getHeight();}
-		
-		
 	
 }

@@ -8,15 +8,17 @@ public class StrategoGL extends GameLogic {
 	private int defaultWidth = 10;
 	private int defaultHeight = 10;
 	
-	private boolean placementPhase = true;
-	private Queue<Piece> player0StartingUnits = new LinkedList<Piece>();
-	private Queue<Piece> player1StartingUnits = new LinkedList<Piece>();
+	private boolean placementPhase0 = true;
+	private boolean placementPhase1 = true;
+	private Queue<StrategoPiece> player0StartingUnits = new LinkedList<StrategoPiece>();
+	private Queue<StrategoPiece> player1StartingUnits = new LinkedList<StrategoPiece>();
 	private StrategoPiece selectedPiece;
 	
 	public StrategoGL(){
 		turn = 0;
 		boardConstructor();
 		fillStartingUnits();
+		System.out.println("Place " + player0StartingUnits.peek());
 	}
 	
 	@Override
@@ -27,14 +29,14 @@ public class StrategoGL extends GameLogic {
 				board.pieces[i][j] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 			}
 		}
-		board.pieces[2][4] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[2][5] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[3][4] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[3][5] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[6][4] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[6][5] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[7][4] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
-		board.pieces[7][5] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[4][2] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[5][2] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[4][3] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[5][3] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[4][6] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[5][6] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[4][7] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
+		board.pieces[5][7] = StrategoPieceFactory.createPiece(StrategoPieceFactory.WATER, turn);
 		//prompt user to add pieces to the board
 		
 	}
@@ -88,31 +90,43 @@ public class StrategoGL extends GameLogic {
 			player0StartingUnits.add(StrategoPieceFactory.createPiece(StrategoPieceFactory.SCOUT, 0));
 			player1StartingUnits.add(StrategoPieceFactory.createPiece(StrategoPieceFactory.SCOUT, 1));
 		}
+		
+		player0StartingUnits.add(StrategoPieceFactory.createPiece(StrategoPieceFactory.SPY, 0));
+		player1StartingUnits.add(StrategoPieceFactory.createPiece(StrategoPieceFactory.SPY, 1));
 	}
 	
 	@Override
-	public void makeMove(int x,int y) {
+	public String makeMove(int x,int y) {
+		System.out.println(turn);
 		StrategoPiece targetedPiece = (StrategoPiece) board.pieces[x][y];
-		if(placementPhase){						//placing tiles in setup
+		if(placementPhase0 || placementPhase1){						//placing tiles in setup
 			handlePlacePiece(targetedPiece);
-			return;
+			return null;
 		}
 		if(!targetedPiece.isTargetable()){		//selecting or targeting water tiles
+			selectedPiece.setSelected(false);
 			selectedPiece = null;
-			return;
+			return null;
 		}
 		if(selectedPiece == null){				//to select a piece
 			if(targetedPiece.isSelectable() && targetedPiece.getPlayer() == turn){
 				selectedPiece = targetedPiece;
+				selectedPiece.setSelected(true);
+				return null;
 			}
 		}
 		
 		if(targetedPiece.getPlayer() == turn){	//targeting your own piece
+			selectedPiece.setSelected(false);
+			targetedPiece.setSelected(true);
 			selectedPiece = targetedPiece;
+			return null;
 		}
-		
+		if(targetedPiece.getPlayer() != turn){
+			return null;
+		}
 /*TODO: handle scout's special movement case
-		if(selectedPiece.getRank() == '8' && validScoutMove(selectedPiece, targetedPiece)){
+		if(selectedPiece.getName() == StrategoPieceFactory.SCOUT && isValidScoutMove(selectedPiece, targetedPiece)){
 			movePiece(selectedPiece, targetedPiece);
 			changeTurn();
 		}
@@ -120,7 +134,10 @@ public class StrategoGL extends GameLogic {
 		if(isAdjacent(selectedPiece, targetedPiece)){
 			movePiece(selectedPiece, targetedPiece);	//for targeted empty space or enemies
 			changeTurn();
+			return null;
 		}
+
+		return null;
 	}
 
 
@@ -129,6 +146,38 @@ public class StrategoGL extends GameLogic {
 		int tpPos[] = board.getPosition(targetedPiece);
 		int tpX = tpPos[0];
 		int tpY = tpPos[1];
+		
+		if(!targetedPiece.isEmpty()){
+			return;
+		}
+		
+		if(placementPhase0){
+			if(tpX < 6){
+				return;
+			}
+			
+			board.pieces[tpX][tpY] =  player0StartingUnits.remove();
+		} else if(placementPhase1){
+			if(tpX > 3){
+				return;
+			}
+			board.pieces[tpX][tpY] = player1StartingUnits.remove();
+		}
+			
+			
+		if(!player0StartingUnits.isEmpty()){
+			System.out.println("Place " + player0StartingUnits.peek().getName());	//TODO switch to UI console
+		} else if(!player1StartingUnits.isEmpty()){
+			System.out.println("Place " + player1StartingUnits.peek().getName());	//TODO switch to UI console
+		}
+		
+		if (placementPhase0 && player0StartingUnits.isEmpty()){
+			placementPhase0 = false;
+			changeTurn();
+		} else if(placementPhase1 && player1StartingUnits.isEmpty()){
+			placementPhase1 = false;
+			changeTurn();
+		}
 	}
 	
 	private void movePiece(StrategoPiece selectedPiece, StrategoPiece targetedPiece){
@@ -139,12 +188,12 @@ public class StrategoGL extends GameLogic {
 		int tpX = tpPos[0];
 		int tpY = tpPos[1];
 		
-		switch(targetedPiece.getRank()){
-			case 'e':			//move into empty space
+		switch(targetedPiece.getName()){
+			case StrategoPieceFactory.EMPTY:			
 				board.pieces[spX][spY] = targetedPiece;
 				board.pieces[tpX][tpY] = selectedPiece;
 				return;
-			case 'f':			//capture flag
+			case StrategoPieceFactory.FLAG:			
 				if(turn == 0){
 					player1FlagExists = false;
 				} else{
@@ -153,7 +202,7 @@ public class StrategoGL extends GameLogic {
 				board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 				board.pieces[tpX][tpY] = selectedPiece;
 				break;
-			case 'b':			//bomb
+			case StrategoPieceFactory.BOMB:			
 				if(selectedPiece.getRank() == '7'){
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
@@ -161,7 +210,7 @@ public class StrategoGL extends GameLogic {
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 				}
 				break;
-			case '1':			//marshal
+			case StrategoPieceFactory.MARSHAL:			
 				if(selectedPiece.getRank() == '9'){
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
@@ -182,6 +231,12 @@ public class StrategoGL extends GameLogic {
 		}
 		selectedPiece.setHidden(false);
 		targetedPiece.setHidden(false);
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		selectedPiece.setSelected(false);
 	}
 	
 	private boolean isAdjacent(Piece selectedPiece, Piece targetedPiece){
@@ -208,11 +263,9 @@ public class StrategoGL extends GameLogic {
 	@Override
 	public boolean checkEnd() {
 		if(!player0FlagExists){
-			//player 2 wins and do something?
 			return true;
 		}
 		if(!player1FlagExists){
-			//player1 wins and do something?
 			return true;
 		}
 		return false;
@@ -225,6 +278,22 @@ public class StrategoGL extends GameLogic {
 			for(int j = 0; j < board.getHeight(); ++j){
 				((StrategoPiece)board.pieces[i][j]).setTurn(turn);
 			}
+		}
+		for(StrategoPiece piece: player0StartingUnits){
+			piece.setTurn(turn);
+		}
+		for(StrategoPiece piece: player1StartingUnits){
+			piece.setTurn(turn);
+		}
+	}
+
+	public Integer getP1Score(){return null;}
+	public Integer getP2Score(){return null;}
+	public int getWinner(){
+		if(!player0FlagExists){
+			return 0;
+		} else {
+			return 1;
 		}
 	}
 }

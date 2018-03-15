@@ -2,7 +2,9 @@ import java.util.ArrayList;
 
 public class SimonSaysGL extends GameLogic
 {
+	int winner;
 
+	boolean end = false;
 	boolean[] counters = {false,false};
 	ArrayList<ArrayList<String>> player_colors = new ArrayList<ArrayList<String>>();
 
@@ -15,12 +17,10 @@ public class SimonSaysGL extends GameLogic
 
 	public void boardConstructor(){
 		board = new Board(2,2);
-		// this does not work because in boardtile, the icon is only gotten after an action is performed
 		board.pieces[0][0] = new SimonSaysPiece(0);
 		board.pieces[0][1] = new SimonSaysPiece(1);
 		board.pieces[1][0] = new SimonSaysPiece(2);
 		board.pieces[1][1] = new SimonSaysPiece(3);
-		//change this later with real tiles
 
 	}
 
@@ -28,7 +28,7 @@ public class SimonSaysGL extends GameLogic
 		return true;
 	}
 	   
-	public void makeMove(int row, int col) { 
+	public String makeMove(int row, int col) { 
 
 		System.out.println("TURN = " + turn);
 
@@ -53,7 +53,7 @@ public class SimonSaysGL extends GameLogic
 				else{
 					// finished attempt to match opposing player's pattern
 					// check if attempt matches
-					if (checkEnd()){ 
+					if (checkEquals()){ 
 						player_colors.get(turn).add(board.pieces[row][col].getIcon()); // extend the pattern
 						counters[turn] = false;	
 						changeTurn();
@@ -61,23 +61,36 @@ public class SimonSaysGL extends GameLogic
 					else{
 						// pattern is messed up, game over
 						System.out.println("END GAME");
-						return;
+						end = true;
+						return null;
 					}
 				}
 			}
 
 		}
 
+		if (checkEnd()){
+			return null;
+		}
 
 		System.out.println(player_colors.get(0));
 		System.out.println(player_colors.get(1));
 
+		return null;
 
 	}
 	   
-	public boolean checkEnd(){
-		// true means pattern matched, game continues
-		// false means pattern did not match, game is over
+	public boolean checkEquals(){
 		return (player_colors.get(0).equals(player_colors.get(1)));
+	}
+
+	public boolean checkEnd(){
+		return end;
+	}
+
+	public Integer getP1Score(){return null;}
+	public Integer getP2Score(){return null;}
+	public int getWinner(){
+		return turn^1;
 	}
 }

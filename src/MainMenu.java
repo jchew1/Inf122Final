@@ -14,14 +14,14 @@ public class MainMenu extends JFrame{
 	JPanel mainPanel = new JPanel();
 	JTextField p1t = new JTextField(20);
 	JTextField p2t = new JTextField(20);
-	String[] games = new String[]{"TicTacToe", "Stratego", "Pente", "Simon Says"};
+	String[] games = new String[]{"TicTacToe", "Pente", "SimonSays", "Stratego"};
 	JComboBox<String> gamesList = new JComboBox<String>(games);
 
 	MainMenu(int width, int height, String title){
 		super(title);
 		setSize(width, height);
 		setResizable(false);
-	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
@@ -69,6 +69,14 @@ public class MainMenu extends JFrame{
 		});
 		startPanel.add(startButton);
 
+		JButton statsButton = new JButton("Stats");
+		statsButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				statsButtonPressed();
+			}
+		});
+		startPanel.add(statsButton);
+
 		gamesPanel.setLayout(new BoxLayout(gamesPanel, BoxLayout.Y_AXIS));
 		gamesPanel.add(gamesListPanel);
 		gamesPanel.add(startPanel);
@@ -79,14 +87,18 @@ public class MainMenu extends JFrame{
 
 	void startButtonPressed(){
 		System.out.println("start button pressed");
-		Driver.getUser(p1t.getText());
-		Driver.getUser(p2t.getText());
+		Driver.user1 = Driver.getUser(p1t.getText());
+		Driver.user2 = Driver.getUser(p2t.getText());
+		Driver.users.put(Driver.user1.getName(), Driver.user1);
+		Driver.users.put(Driver.user2.getName(), Driver.user2);
 		Driver.currentGame = (String)gamesList.getSelectedItem();
 		setVisible(false);
 	}
 
-	void getUsernames(){
-		System.out.println(p1t.getText());
-		System.out.println(p2t.getText());
+	void statsButtonPressed(){
+		System.out.println("stats button pressed");
+		Driver.user1 = Driver.getUser(p1t.getText());
+		Driver.user2 = Driver.getUser(p2t.getText());
+		new StatsGUI(Driver.user1, Driver.user2);
 	}
 }

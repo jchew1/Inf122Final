@@ -1,5 +1,7 @@
 public class TicTacToeGL extends GameLogic
 {
+	int winner;
+
 	public TicTacToeGL() {
 		turn = 0;
 		boardConstructor();
@@ -22,11 +24,13 @@ public class TicTacToeGL extends GameLogic
 				}
 			}
 		}
+		winner = -1;
 		return true;
 	}
 	   
 	public boolean checkForWin() {
 		if((checkRowsForWin() || checkColumnsForWin() || checkDiagonalsForWin())){
+			winner = turn;
 			return true;
 		}
 		return false;
@@ -44,6 +48,7 @@ public class TicTacToeGL extends GameLogic
 	private boolean checkRowsForWin() {
 		for (int i = 0; i < 3; i++) {
 			if (checkRowCol(board.pieces[i][0], board.pieces[i][1], board.pieces[i][2]) == true) {
+				winner = turn;
 				return true;
 			}
 		}
@@ -66,14 +71,15 @@ public class TicTacToeGL extends GameLogic
 		return board.pieces[x][y].player == -1;
 	}
 	   
-	public void makeMove(int row, int col) {         
+	public String makeMove(int row, int col) {         
 		if(checkValidMove(row, col)){
 			board.pieces[row][col].setPlayer(turn);
 			if(checkEnd()){
-				return;
+				return null;
 			}
 			changeTurn();
 		}
+		return null;
 	}
 	   
 	public boolean checkEnd(){
@@ -83,4 +89,8 @@ public class TicTacToeGL extends GameLogic
 		}
 		return false;
 	}
+	
+	public Integer getP1Score(){return null;}
+	public Integer getP2Score(){return null;}
+	public int getWinner(){return winner;}
 }

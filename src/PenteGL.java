@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+
 public class PenteGL extends GameLogic {
-    int userOneCaptures;
+	int userOneCaptures;
 	int userTwoCaptures;
-    int whiteOrBlackTurn; //0 if white turn, 1 if black turn but white
+	int whiteOrBlackTurn; //0 if white turn, 1 if black turn but white
     						  // always goes first
     
+	boolean gameOver = false;
+
 	PenteGL(){
     		turn = 0;            
     		boardConstructor();
@@ -12,7 +15,6 @@ public class PenteGL extends GameLogic {
     
 	@Override
 	public void boardConstructor() {
-		// TODO Auto-generated method stub
 		board = new Board(10, 10);
 		for(int i = 0; i < board.getWidth(); ++i){
 			for(int v = 0; v < board.getHeight(); ++v) {
@@ -23,13 +25,11 @@ public class PenteGL extends GameLogic {
 
 	@Override
 	public boolean checkValidMove(int x, int y) {
-		// TODO Auto-generated method stub
 		return board.pieces[x][y].player == -1;
 	}
 
 	@Override
-	public void makeMove(int x, int y) {
-		// TODO Auto-generated method stub
+	public String makeMove(int x, int y) {
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
 			checkForCaptureRight(x,y);
@@ -37,12 +37,13 @@ public class PenteGL extends GameLogic {
 			checkForCaptureUp(x,y);
 			checkForCaptureDown(x,y);
 			if(checkEnd(x,y)){
-				return;
+				return null;
 			}
 
 			whiteOrBlackTurn = (whiteOrBlackTurn == 1) ? 0 : 1;
 			changeTurn();
 		}
+		return null;
 	}
 
 	public boolean winByGoingFiveRight(int x, int y) {
@@ -171,11 +172,11 @@ public class PenteGL extends GameLogic {
 	
 		
 	public boolean checkEnd(int x, int y) {
-		// TODO Auto-generated method stub
 
 		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) 
 		|| winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) 
 		|| userOneCaptures == 5 || userTwoCaptures == 5) {
+			gameOver = true;
 			return true;
 		}
 		return false;
@@ -347,5 +348,8 @@ public class PenteGL extends GameLogic {
 	}
 	//Never using this
 	@Override
-	public boolean checkEnd() {return false;}
+	public boolean checkEnd() {return gameOver;}
+	public int getWinner(){return turn;}
+	public Integer getP1Score(){return userOneCaptures;}
+	public Integer getP2Score(){return userTwoCaptures;}
 }

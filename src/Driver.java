@@ -10,6 +10,7 @@ class Driver{
 	static User user2;
 	static String currentGame;
 	static GameLogic game;
+	static GameGUI gameGUI;
 
 	static User getUser(String username){
 		User u = users.get(username);
@@ -23,26 +24,56 @@ class Driver{
 	public static void main(String[] args){
 		
 		MainMenu main = new MainMenu(500,200,"Main Menu");
-		while(currentGame==null){
-			try{
-			TimeUnit.SECONDS.sleep(1);
-			}catch(Exception e){}
+		while(true){
+			while(currentGame==null){
+				try{
+					TimeUnit.SECONDS.sleep(1);
+				}catch(Exception e){}
+			}
+
+			switch(currentGame){
+				case "TicTacToe":
+					game = new TicTacToeGL();
+					break;
+				case "Pente":
+					game = new PenteGL();
+					break;
+				case "SimonSays":
+					game = new SimonSaysGL();
+					break;
+				case "Stratego":
+					game = new StrategoGL();
+					break;
+			}
+			gameGUI = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
+			while(!game.checkEnd()){
+				try{
+					TimeUnit.SECONDS.sleep(1);
+				}catch(Exception e){}
+			}
+			gameGUI.gameComplete();
+
+			switch(game.getWinner()){
+				case -1: 
+					user1.addStat(currentGame, 0);
+					user2.addStat(currentGame, 0);
+					break;
+				case 0:
+					user1.addStat(currentGame, 1);
+					user2.addStat(currentGame, -1);
+					break;
+				case 1:
+					user1.addStat(currentGame, -1);
+					user2.addStat(currentGame, 1);
+					break;
+				default:
+					System.out.println("error game get winner");
+			}
+			System.out.printf("user1 wins: %d, losses: %d, ties: %d\n",user1.getStats(currentGame)[0],user1.getStats(currentGame)[1],user1.getStats(currentGame)[2]);
+			System.out.printf("user2 wins: %d, losses: %d, ties: %d\n",user2.getStats(currentGame)[0],user2.getStats(currentGame)[1],user2.getStats(currentGame)[2]);
+			currentGame = null;
+			main.setVisible(true);
 		}
-		switch(currentGame){
-			case "TicTacToe":
-				game = new TicTacToeGL();
-				break;
-			case "Pente":
-			    game = new PenteGL();
-				break;
-			case "Simon Says":
-				game = new SimonSaysGL();
-				break;
-			case "Stratego":
-				//game = new StrategoGL();
-				break;
-		}
-		GameGUI gg = new GameGUI(1000,1000,currentGame, game.getBoardX(), game.getBoardY());
 	}
 }
 
