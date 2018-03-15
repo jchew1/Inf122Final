@@ -1,5 +1,7 @@
 public class TicTacToeGL extends GameLogic
 {
+	int winner;
+
 	public TicTacToeGL() {
 		turn = 0;
 		boardConstructor();
@@ -66,19 +68,21 @@ public class TicTacToeGL extends GameLogic
 		return board.pieces[x][y].player == -1;
 	}
 	   
-	public void makeMove(int row, int col) {         
+	public String makeMove(int row, int col) {         
 		if(checkValidMove(row, col)){
 			board.pieces[row][col].setPlayer(turn);
 			if(checkEnd()){
-				return;
+				return null;
 			}
 			changeTurn();
 		}
+		return null;
 	}
 	   
 	public boolean checkEnd(){
 		if (checkForWin()==true || isBoardFull()==true){
 			System.out.println("game finished");
+			winner = turn;
 			return true;
 		}
 		return false;
@@ -86,4 +90,5 @@ public class TicTacToeGL extends GameLogic
 	
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
+	public int getWinner(){return winner;}
 }

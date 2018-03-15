@@ -15,12 +15,10 @@ public class SimonSaysGL extends GameLogic
 
 	public void boardConstructor(){
 		board = new Board(2,2);
-		// this does not work because in boardtile, the icon is only gotten after an action is performed
 		board.pieces[0][0] = new SimonSaysPiece(0);
 		board.pieces[0][1] = new SimonSaysPiece(1);
 		board.pieces[1][0] = new SimonSaysPiece(2);
 		board.pieces[1][1] = new SimonSaysPiece(3);
-		//change this later with real tiles
 
 	}
 
@@ -28,7 +26,7 @@ public class SimonSaysGL extends GameLogic
 		return true;
 	}
 	   
-	public void makeMove(int row, int col) { 
+	public String makeMove(int row, int col) { 
 
 		System.out.println("TURN = " + turn);
 
@@ -61,7 +59,7 @@ public class SimonSaysGL extends GameLogic
 					else{
 						// pattern is messed up, game over
 						System.out.println("END GAME");
-						return;
+						return null;
 					}
 				}
 			}
@@ -72,6 +70,7 @@ public class SimonSaysGL extends GameLogic
 		System.out.println(player_colors.get(0));
 		System.out.println(player_colors.get(1));
 
+		return null;
 
 	}
 	   
@@ -83,4 +82,7 @@ public class SimonSaysGL extends GameLogic
 
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
+	public int getWinner(){
+		return 0;
+	}
 }

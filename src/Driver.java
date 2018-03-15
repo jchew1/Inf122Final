@@ -10,6 +10,7 @@ class Driver{
 	static User user2;
 	static String currentGame;
 	static GameLogic game;
+	static GameGUI gameGUI;
 
 	static User getUser(String username){
 		User u = users.get(username);
@@ -44,14 +45,14 @@ class Driver{
 					//game = new StrategoGL();
 					break;
 			}
-			GameGUI gg = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
+			gameGUI = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
 			while(!game.checkEnd()){
 				try{
 					TimeUnit.SECONDS.sleep(1);
 				}catch(Exception e){}
 				System.out.println("game not over");
 			}
-			gg.gameComplete();
+			gameGUI.gameComplete();
 			currentGame = null;
 			main.setVisible(true);
 		}

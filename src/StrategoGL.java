@@ -91,15 +91,15 @@ public class StrategoGL extends GameLogic {
 	}
 	
 	@Override
-	public void makeMove(int x,int y) {
+	public String makeMove(int x,int y) {
 		StrategoPiece targetedPiece = (StrategoPiece) board.pieces[x][y];
 		if(placementPhase){						//placing tiles in setup
 			handlePlacePiece(targetedPiece);
-			return;
+			return null;
 		}
 		if(!targetedPiece.isTargetable()){		//selecting or targeting water tiles
 			selectedPiece = null;
-			return;
+			return null;
 		}
 		if(selectedPiece == null){				//to select a piece
 			if(targetedPiece.isSelectable() && targetedPiece.getPlayer() == turn){
@@ -121,6 +121,8 @@ public class StrategoGL extends GameLogic {
 			movePiece(selectedPiece, targetedPiece);	//for targeted empty space or enemies
 			changeTurn();
 		}
+
+		return null;
 	}
 
 
@@ -230,4 +232,5 @@ public class StrategoGL extends GameLogic {
 
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
+	public int getWinner(){return 0;}
 }
