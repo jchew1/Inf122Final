@@ -2,6 +2,7 @@ import java.util.ArrayList;
 
 public class SimonSaysGL extends GameLogic
 {
+	int winner;
 
 	boolean[] counters = {false,false};
 	ArrayList<ArrayList<String>> player_colors = new ArrayList<ArrayList<String>>();
@@ -66,7 +67,6 @@ public class SimonSaysGL extends GameLogic
 
 		}
 
-
 		System.out.println(player_colors.get(0));
 		System.out.println(player_colors.get(1));
 
@@ -82,7 +82,5 @@ public class SimonSaysGL extends GameLogic
 
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
-	public int getWinner(){
-		return 0;
-	}
+	public int getWinner(){return winner;}
 }

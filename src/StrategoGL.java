@@ -232,5 +232,5 @@ public class StrategoGL extends GameLogic {
 
 	public Integer getP1Score(){return null;}
 	public Integer getP2Score(){return null;}
-	public int getWinner(){return 0;}
+	public int getWinner(){return turn;}
 }

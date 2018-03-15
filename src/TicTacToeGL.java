@@ -24,11 +24,13 @@ public class TicTacToeGL extends GameLogic
 				}
 			}
 		}
+		winner = -1;
 		return true;
 	}
 	   
 	public boolean checkForWin() {
 		if((checkRowsForWin() || checkColumnsForWin() || checkDiagonalsForWin())){
+			winner = turn;
 			return true;
 		}
 		return false;
@@ -46,6 +48,7 @@ public class TicTacToeGL extends GameLogic
 	private boolean checkRowsForWin() {
 		for (int i = 0; i < 3; i++) {
 			if (checkRowCol(board.pieces[i][0], board.pieces[i][1], board.pieces[i][2]) == true) {
+				winner = turn;
 				return true;
 			}
 		}
@@ -82,7 +85,6 @@ public class TicTacToeGL extends GameLogic
 	public boolean checkEnd(){
 		if (checkForWin()==true || isBoardFull()==true){
 			System.out.println("game finished");
-			winner = turn;
 			return true;
 		}
 		return false;

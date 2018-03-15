@@ -53,6 +53,26 @@ class Driver{
 				System.out.println("game not over");
 			}
 			gameGUI.gameComplete();
+
+			System.out.printf("%s, %s\n",user1.getName(), user2.getName());
+			switch(game.getWinner()){
+				case -1: 
+					user1.addStat(currentGame, 0);
+					user2.addStat(currentGame, 0);
+					break;
+				case 0:
+					user1.addStat(currentGame, 1);
+					user2.addStat(currentGame, -1);
+					break;
+				case 1:
+					user1.addStat(currentGame, -1);
+					user2.addStat(currentGame, 1);
+					break;
+				default:
+					System.out.println("error game get winner");
+			}
+			System.out.printf("user1 wins: %d, losses: %d, ties: %d\n",user1.getStats(currentGame)[0],user1.getStats(currentGame)[1],user1.getStats(currentGame)[2]);
+			System.out.printf("user2 wins: %d, losses: %d, ties: %d\n",user2.getStats(currentGame)[0],user2.getStats(currentGame)[1],user2.getStats(currentGame)[2]);
 			currentGame = null;
 			main.setVisible(true);
 		}

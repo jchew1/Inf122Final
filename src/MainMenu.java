@@ -21,7 +21,7 @@ public class MainMenu extends JFrame{
 		super(title);
 		setSize(width, height);
 		setResizable(false);
-	//	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
@@ -81,12 +81,9 @@ public class MainMenu extends JFrame{
 		System.out.println("start button pressed");
 		Driver.user1 = Driver.getUser(p1t.getText());
 		Driver.user2 = Driver.getUser(p2t.getText());
+		Driver.users.put(Driver.user1.getName(), Driver.user1);
+		Driver.users.put(Driver.user2.getName(), Driver.user2);
 		Driver.currentGame = (String)gamesList.getSelectedItem();
 		setVisible(false);
-	}
-
-	void getUsernames(){
-		System.out.println(p1t.getText());
-		System.out.println(p2t.getText());
 	}
 }

@@ -8,14 +8,12 @@ class User{
 	User(String name){
 		this.name = name;
 		stats = new HashMap<String, int[]>();
-
 	}	
 
 	void addStat(String game, int score){
 		int[] g = stats.get(game);
-		if(g == null){
-			stats.put(game, new int[3]);
-			g = stats.get(game);
+		if(g==null){
+			g = new int[]{0,0,0};
 		}
 		switch(score){
 			case -1:
@@ -30,6 +28,7 @@ class User{
 			default:
 				System.out.println("invalid score");
 		}
+		stats.put(game, g);
 	}
 
 	// getters and setters
@@ -40,5 +39,4 @@ class User{
 		}
 		return stats.get(game);
 	}
-
 }

@@ -63,8 +63,8 @@ public class GameGUI extends JFrame{
 		JPanel p1Panel = new JPanel();
 		JPanel p2Panel = new JPanel();
 
-		JLabel p1 = new JLabel(Driver.user1.getName());
-		JLabel p2 = new JLabel(Driver.user2.getName());
+		JLabel p1 = new JLabel(Driver.user1.getName()+": ");
+		JLabel p2 = new JLabel(Driver.user2.getName()+": ");
 
 		p1Panel.add(p1);
 		p2Panel.add(p2);
@@ -89,7 +89,19 @@ public class GameGUI extends JFrame{
 	}
 
 	void gameComplete(){
-		JOptionPane.showMessageDialog(this, "Winner: "+Driver.game.getWinner());
+		switch(Driver.game.getWinner()){
+			case -1:
+				JOptionPane.showMessageDialog(this, "DRAW");
+				break;
+			case 0:
+				JOptionPane.showMessageDialog(this, "WINNER: "+Driver.user1.getName());
+				break;
+			case 1:
+				JOptionPane.showMessageDialog(this, "WINNER: "+Driver.user2.getName());
+				break;
+			default:
+				System.out.println("winner error");
+		}
 		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
 	}
 

@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 
 class BoardTile extends JButton implements ActionListener{
 
@@ -26,8 +27,13 @@ class BoardTile extends JButton implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e){
 		System.out.printf("Tile Pressed %d,%d\n", x, y);
-		Driver.game.makeMove(x,y);
+		String turnMessage = Driver.game.makeMove(x,y);
 		setImage(Driver.game.board.pieces[x][y].getIcon());
+		Driver.gameGUI.boardPanel.setVisible(false);
+		if(turnMessage != null){
+			JOptionPane.showMessageDialog(Driver.gameGUI, turnMessage);
+		}
+		Driver.gameGUI.boardPanel.setVisible(true);
 	}
 
 	void setImage(String icon){
