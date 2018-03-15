@@ -75,7 +75,6 @@ public class PenteGL extends GameLogic {
 		}
 		return false;
 	}
-	
 	public boolean checkEnd(int x, int y) {
 		// TODO Auto-generated method stub
 
