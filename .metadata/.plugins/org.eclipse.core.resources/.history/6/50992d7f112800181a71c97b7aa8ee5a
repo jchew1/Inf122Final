@@ -48,7 +48,7 @@ public class PenteGL extends GameLogic {
 	public boolean winByGoingFiveRight(int x, int y) {
 		int consWhite = 0;
 		int consBlack = 0;
-		if(whiteOrBlackTurn == 0) {
+		if(whiteOrBlackTurn == 1) {
 			for(int i = x; i < board.getWidth(); ++i) {
 				if(board.pieces[x][y].getPlayer() == 1) {
 					consWhite += 1;
@@ -60,9 +60,7 @@ public class PenteGL extends GameLogic {
 					break;
 				}
 			}
-		}else{
-			
-		}
+		}	
 		return false;
 	}
 	public boolean checkEnd(int x, int y) {
