@@ -45,7 +45,8 @@ public class PenteGL extends GameLogic {
 		}
 	}
 
-	public boolean winByGoingFiveRight(int x, int y) {
+	public boolean checkEnd(int x, int y) {
+		// TODO Auto-generated method stub
 		int consWhite = 0;
 		int consBlack = 0;
 		if(whiteOrBlackTurn == 1) {
@@ -60,13 +61,8 @@ public class PenteGL extends GameLogic {
 					break;
 				}
 			}
-		}	
-		return false;
-	}
-	public boolean checkEnd(int x, int y) {
-		// TODO Auto-generated method stub
-
-		if(winByGoingFiveRight(x, y) || userOneCaptures == 5 || userTwoCaptures == 5) {
+		}
+		if(userOneCaptures == 5 || userTwoCaptures == 5) {
 			return true;
 		}
 		return false;
