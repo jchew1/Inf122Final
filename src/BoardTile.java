@@ -30,11 +30,14 @@ class BoardTile extends JButton implements ActionListener{
 		String turnMessage = Driver.game.makeMove(x,y);
 		setImage(Driver.game.board.pieces[x][y].getIcon());
 		Driver.gameGUI.boardPanel.setVisible(false);
-		if(turnMessage != null){
+		if(turnMessage != null && turnMessage.equals("Empty")){ //TODO: quick fix, need to refactor
+			Driver.gameGUI.updateTiles();
+		}else if(turnMessage != null){
 			JOptionPane.showMessageDialog(Driver.gameGUI, turnMessage);
 			Driver.gameGUI.updateTiles();
 		}
 		Driver.gameGUI.boardPanel.setVisible(true);
+
 	}
 
 	void setImage(String icon){
