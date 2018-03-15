@@ -112,7 +112,7 @@ public class PenteGL extends GameLogic {
 		int consBlack = 0;
 		if(whiteOrBlackTurn == 0) {
 			for(int i = y; i >= 0; --i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
+				if(board.pieces[x][i].getPlayer() == 0) {
 					consWhite += 1;
 				}else {
 					if(consWhite == 5) {
@@ -124,7 +124,7 @@ public class PenteGL extends GameLogic {
 			}
 		}else{
 			for(int i = x; i >= 0; --i) {
-				if(board.pieces[i][y].getPlayer() == 1) {
+				if(board.pieces[x][i].getPlayer() == 1) {
 					consBlack += 1;
 				}else {
 					if(consBlack == 5) {
