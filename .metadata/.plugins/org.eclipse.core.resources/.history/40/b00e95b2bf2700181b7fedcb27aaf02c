@@ -1,0 +1,31 @@
+
+public class PenteGL extends GameLogic {
+        PenteGL(){
+            turn = 0;            
+            boardConstructor();
+        }
+	@Override
+	public void boardConstructor() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean checkValidMove(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void makeMove(int x, int y) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean checkEnd() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+}

@@ -1,0 +1,11 @@
+class PentePiece extends Piece {
+	PentePiece(int player){
+		super(player);
+	}
+	@Override
+	String getIcon() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
