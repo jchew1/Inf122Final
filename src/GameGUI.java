@@ -6,6 +6,8 @@ import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
 
 public class GameGUI extends JFrame{
 	
@@ -79,4 +81,10 @@ public class GameGUI extends JFrame{
 		mainPanel.add(scorePanel, BorderLayout.LINE_END);
 
 	}
+
+	void gameComplete(){
+		JOptionPane.showMessageDialog(this, "Winner: ");
+		dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
+
 }

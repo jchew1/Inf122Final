@@ -23,32 +23,37 @@ class Driver{
 	public static void main(String[] args){
 		
 		MainMenu main = new MainMenu(500,200,"Main Menu");
-		while(currentGame==null){
-			try{
-				TimeUnit.SECONDS.sleep(1);
-			}catch(Exception e){}
-		}
+		while(true){
+			while(currentGame==null){
+				try{
+					TimeUnit.SECONDS.sleep(1);
+				}catch(Exception e){}
+			}
 
-		switch(currentGame){
-			case "TicTacToe":
-				game = new TicTacToeGL();
-				break;
-			case "Pente":
-				//game = new PenteGL();
-				break;
-			case "SimonSays":
-				game = new SimonSaysGL();
-				break;
-			case "Stratego":
-				//game = new StrategoGL();
-				break;
-		}
-		GameGUI gg = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
-		while(!game.checkEnd()){
-			try{
-				TimeUnit.SECONDS.sleep(1);
-			}catch(Exception e){}
-			System.out.println("game not over");
+			switch(currentGame){
+				case "TicTacToe":
+					game = new TicTacToeGL();
+					break;
+				case "Pente":
+					//game = new PenteGL();
+					break;
+				case "SimonSays":
+					game = new SimonSaysGL();
+					break;
+				case "Stratego":
+					//game = new StrategoGL();
+					break;
+			}
+			GameGUI gg = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
+			while(!game.checkEnd()){
+				try{
+					TimeUnit.SECONDS.sleep(1);
+				}catch(Exception e){}
+				System.out.println("game not over");
+			}
+			gg.gameComplete();
+			currentGame = null;
+			main.setVisible(true);
 		}
 	}
 }
