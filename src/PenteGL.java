@@ -264,7 +264,6 @@ public class PenteGL extends GameLogic {
 			}
 		}else { //blacks move
 			for(int i = y + 1; i < board.getHeight(); ++i) {
-				System.out.printf("x:%d i:%d piece:%d\n", i,y,board.pieces[x][i].getPlayer());
 				if(board.pieces[x][i].getPlayer() == 0) {
 					consecutiveWhite += 1;
 					removalList.add(new Pair(x, i));
@@ -285,29 +284,30 @@ public class PenteGL extends GameLogic {
 		int consecutiveBlack = 0;
 		int consecutiveWhite = 0;
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
-		//going right
+
 		if(y == 0) {
 			return;
 		}
 		if(whiteOrBlackTurn == 0) { //whites move
-			for(int i = y - 1; i <= 0; --i) {
+			for(int i = y - 1; i > 0; --i) {
 		    		if(board.pieces[x][i].getPlayer() == 1) { 
 					consecutiveBlack += 1;
-					removalList.add(new Pair(i,y));
+					removalList.add(new Pair(x,i));
 		    		}else{
-					if(consecutiveBlack == 2 && board.pieces[i][y].getPlayer() == 0) {
+					if(consecutiveBlack == 2 && board.pieces[x][i].getPlayer() == 0) {
 						removeTwo(removalList);
 					}
 					break;
 				}
 			}
 		}else { //blacks move
-			for(int i = y - 1; i <= 0; --i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
+			System.out.println("debug1");
+			for(int i = y - 1; i > 0; --i) {
+				if(board.pieces[x][i].getPlayer() == 0) {
 					consecutiveWhite += 1;
-					removalList.add(new Pair(i, y));
+					removalList.add(new Pair(x,i));
 				}else{
-					if(consecutiveWhite == 2 && board.pieces[i][y].getPlayer() == 1) {
+					if(consecutiveWhite == 2 && board.pieces[x][i].getPlayer() == 1) {
 						removeTwo(removalList);
 					}
 					break;
