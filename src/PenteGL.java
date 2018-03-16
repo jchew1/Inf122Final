@@ -32,6 +32,10 @@ public class PenteGL extends GameLogic {
 	public String makeMove(int x, int y) {
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
+			checkForCaptureUpRight(x,y);
+			checkForCaptureUpLeft(x,y);
+			checkForCaptureDownRight(x,y);
+			checkForCaptureDownLeft(x,y);
 			checkForCaptureRight(x,y);
 			checkForCaptureLeft(x,y);
 			checkForCaptureUp(x,y);
@@ -139,12 +143,28 @@ public class PenteGL extends GameLogic {
 		}
 		return cons == 4;
 	}
+	public boolean checkForDraw() {
+		for(int i = 0; i < board.getWidth(); ++i) {
+			for(int v = 0; v < board.getHeight(); ++v) {
+				if(board.pieces[i][v].getPlayer() == -1) {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	public boolean checkEnd(int x, int y) {
 
 		if(winByRowUpDown(x,y) || winByRowLeftRight(x,y) || 
 		   winByDiagonalRightUpLeftDown(x,y) || winByDiagonalLeftUpRightDown(x,y) ||
 			userOneCaptures == 5 || userTwoCaptures == 5) {
+			if(whiteOrBlackTurn == 1) { System.out.println("Winner is player 2!");};
+			if(whiteOrBlackTurn == 0) { System.out.println("Winner is player 1!");};
 			gameOver = true;
+			return true;
+		}
+		if(checkForDraw()) {
+			System.out.println("Draw!");
 			return true;
 		}
 		return false;
@@ -301,7 +321,6 @@ public class PenteGL extends GameLogic {
 				}
 			}
 		}else { //blacks move
-			System.out.println("debug1");
 			for(int i = y - 1; i > 0; --i) {
 				if(board.pieces[x][i].getPlayer() == 0) {
 					consecutiveWhite += 1;
@@ -314,6 +333,175 @@ public class PenteGL extends GameLogic {
 				
 				}
 			
+			}
+		}
+	}	
+	//works
+	public void checkForCaptureUpRight(int x, int y) {
+		//Check all to the right
+		int consecutiveBlack = 0;
+		int consecutiveWhite = 0;
+		ArrayList<Pair> removalList= new ArrayList<Pair>();
+
+		if(y == 0) {
+			return;
+		}
+		int v = x - 1;
+		if(whiteOrBlackTurn == 0) { //whites move
+			for(int i = y + 1; i < board.getHeight(); ++i) {
+				if(v < 0) {break;}	
+				if(board.pieces[v][i].getPlayer() == 1) { 
+					consecutiveBlack += 1;
+					removalList.add(new Pair(v,i));
+		    		}else{
+					if(consecutiveBlack == 2 && board.pieces[v][i].getPlayer() == 0) {
+						removeTwo(removalList);
+					}
+					break;
+				}
+		    	v--;
+			}
+		}else { //blacks move
+			for(int i = y + 1; i < board.getHeight(); ++i) {
+				if(v < 0) {break;}
+				if(board.pieces[v][i].getPlayer() == 0) {
+					consecutiveWhite += 1;
+					removalList.add(new Pair(v,i));
+				}else{
+					if(consecutiveWhite == 2 && board.pieces[v][i].getPlayer() == 1) {
+						removeTwo(removalList);
+					}
+					break;
+				
+				}
+			v--;
+			}
+		}
+	}	
+	//works
+	public void checkForCaptureUpLeft(int x, int y) {
+		//Check all to the right
+		int consecutiveBlack = 0;
+		int consecutiveWhite = 0;
+		ArrayList<Pair> removalList= new ArrayList<Pair>();
+
+		if(y == 0) {
+			return;
+		}
+		int v = x - 1;
+		if(whiteOrBlackTurn == 0) { //whites move
+			for(int i = y - 1; i >= 0; --i) {
+				if(v < 0) {break;}	
+				if(board.pieces[v][i].getPlayer() == 1) { 
+					consecutiveBlack += 1;
+					removalList.add(new Pair(v,i));
+		    		}else{
+					if(consecutiveBlack == 2 && board.pieces[v][i].getPlayer() == 0) {
+						removeTwo(removalList);
+					}
+					break;
+				}
+		    	v--;
+			}
+		}else { //blacks move
+			for(int i = y - 1; i >= 0; --i) {
+				if(v < 0) {break;}
+				if(board.pieces[v][i].getPlayer() == 0) {
+					consecutiveWhite += 1;
+					removalList.add(new Pair(v,i));
+				}else{
+					if(consecutiveWhite == 2 && board.pieces[v][i].getPlayer() == 1) {
+						removeTwo(removalList);
+					}
+					break;
+				
+				}
+			v--;
+			}
+		}
+	}	
+	
+	//works
+	public void checkForCaptureDownRight(int x, int y) {
+		//Check all to the right
+		int consecutiveBlack = 0;
+		int consecutiveWhite = 0;
+		ArrayList<Pair> removalList= new ArrayList<Pair>();
+
+		if(y == 0) {
+			return;
+		}
+		int v = x + 1;
+		if(whiteOrBlackTurn == 0) { //whites move
+			for(int i = y + 1; i < board.getHeight(); ++i) {
+				if(v >= board.getWidth()) {break;}	
+				if(board.pieces[v][i].getPlayer() == 1) { 
+					consecutiveBlack += 1;
+					removalList.add(new Pair(v,i));
+		    		}else{
+					if(consecutiveBlack == 2 && board.pieces[v][i].getPlayer() == 0) {
+						removeTwo(removalList);
+					}
+					break;
+				}
+		    	v++;
+			}
+		}else { //blacks move
+			for(int i = y + 1; i < board.getHeight(); ++i) {
+				if(v >= board.getWidth()) {break;}
+				if(board.pieces[v][i].getPlayer() == 0) {
+					consecutiveWhite += 1;
+					removalList.add(new Pair(v,i));
+				}else{
+					if(consecutiveWhite == 2 && board.pieces[v][i].getPlayer() == 1) {
+						removeTwo(removalList);
+					}
+					break;
+				
+				}
+			v++;
+			}
+		}
+	}	
+	//works
+	public void checkForCaptureDownLeft(int x, int y) {
+		//Check all to the right
+		int consecutiveBlack = 0;
+		int consecutiveWhite = 0;
+		ArrayList<Pair> removalList= new ArrayList<Pair>();
+
+		if(y == 0) {
+			return;
+		}
+		int v = x + 1;
+		if(whiteOrBlackTurn == 0) { //whites move
+			for(int i = y - 1; i >= 0; --i) {
+				if(v >= board.getWidth()) {break;}	
+				if(board.pieces[v][i].getPlayer() == 1) { 
+					consecutiveBlack += 1;
+					removalList.add(new Pair(v,i));
+		    		}else{
+					if(consecutiveBlack == 2 && board.pieces[v][i].getPlayer() == 0) {
+						removeTwo(removalList);
+					}
+					break;
+				}
+		    	v++;
+			}
+		}else { //blacks move
+			for(int i = y - 1; i >= 0; --i) {
+				if(v >= board.getWidth()) {break;}
+				if(board.pieces[v][i].getPlayer() == 0) {
+					consecutiveWhite += 1;
+					removalList.add(new Pair(v,i));
+				}else{
+					if(consecutiveWhite == 2 && board.pieces[v][i].getPlayer() == 1) {
+						removeTwo(removalList);
+					}
+					break;
+				
+				}
+			v++;
 			}
 		}
 	}	
