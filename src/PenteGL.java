@@ -33,7 +33,7 @@ public class PenteGL extends GameLogic {
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
 			checkForCaptureRight(x,y);
-			checkForCaptureRight(x,y);
+			checkForCaptureLeft(x,y);
 			checkForCaptureUp(x,y);
 			checkForCaptureDown(x,y);
 			if(checkEnd(x,y)){
@@ -45,137 +45,105 @@ public class PenteGL extends GameLogic {
 		}
 		return null;
 	}
-
-	public boolean winByGoingFiveRight(int x, int y) {
-		int consWhite = 0;
-		int consBlack = 0;
-		if(whiteOrBlackTurn == 0) {
-			for(int i = x; i < board.getWidth(); ++i) {
-				if(board.pieces[x][i].getPlayer() == 0) {
-					consWhite += 1;
-				}else {
-					if(consWhite == 5) {
-						System.out.println("White wins by having 5 pieces in a row towards the right");
-						return true;
-					}
-					break;
-				}
-			}
-		}else{
-			for(int i = x; i < board.getWidth(); ++i) {
-				if(board.pieces[x][i].getPlayer() == 1) {
-					consBlack += 1;
-				}else {
-					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row towards the right");
-						return true;
-					}
-					break;
-				}
+	
+	public boolean winByRowUpDown(int x, int y) {
+		int cons = 0;
+		for(int i = y - 1; i >= 0; i--) {
+			if(board.pieces[x][i].getPlayer() == whiteOrBlackTurn) {
+				cons += 1;
+			}else {
+				break;
 			}
 		}
-		return false;
+		for(int i = y + 1; i < board.getHeight(); i++) {
+			if(board.pieces[x][i].getPlayer() == whiteOrBlackTurn) {
+				cons += 1;
+			}else {
+				break;
+			}
+		}
+		return cons == 4;
 	}
 
-	public boolean winByGoingFiveLeft(int x, int y) {
-		int consWhite = 0;
-		int consBlack = 0;
-		if(whiteOrBlackTurn == 0) {
-			for(int i = x; i >= 0; --i) {
-				if(board.pieces[x][i].getPlayer() == 0) {
-					consWhite += 1;
-				}else {
-					if(consWhite == 5) {
-						System.out.println("White wins by having 5 pieces in a row towards the left");
-						return true;
-					}
-					break;
-				}
-			}
-		}else{
-			for(int i = x; i >= 0; --i) {
-				if(board.pieces[x][i].getPlayer() == 1) {
-					consBlack += 1;
-				}else {
-					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row towards the left");
-						return true;
-					}
-					break;
-				}
-			}
-		}
-		return false;
-	}
 
-	public boolean winByGoingFiveUp(int x, int y) {
-		int consWhite = 0;
-		int consBlack = 0;
-		if(whiteOrBlackTurn == 0) {
-			for(int i = y; i >= 0; --i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
-					consWhite += 1;
-				}else {
-					if(consWhite == 5) {
-						System.out.println("White wins by having 5 pieces in a row up");
-						return true;
-					}
-					break;
-				}
-			}
-		}else{
-			for(int i = x; i >= 0; --i) {
-				if(board.pieces[i][y].getPlayer() == 1) {
-					consBlack += 1;
-				}else {
-					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row up");
-						return true;
-					}
-					break;
-				}
+	public boolean winByRowLeftRight(int x, int y) {
+		int cons = 0;
+		for(int i = x - 1; i >= 0; i--) {
+			if(board.pieces[i][y].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
 			}
 		}
-		return false;
+		for(int i = x + 1; i < board.getHeight(); i++) {
+			if(board.pieces[i][y].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
+			}
+		}
+		return cons == 4;
 	}
 	
-	public boolean winByGoingFiveDown(int x, int y) {
-		int consWhite = 0;
-		int consBlack = 0;
-		if(whiteOrBlackTurn == 0) {
-			for(int i = y; i < board.getHeight(); ++i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
-					consWhite += 1;
-				}else {
-					if(consWhite == 5) {
-						System.out.println("White wins by having 5 pieces in a row down");
-						return true;
-					}
-					break;
-				}
-			}
-		}else{
-			for(int i = x; i < board.getHeight(); ++i) {
-				if(board.pieces[i][y].getPlayer() == 1) {
-					consBlack += 1;
-				}else {
-					if(consBlack == 5) {
-						System.out.println("Black wins by having 5 pieces in a row down");
-						return true;
-					}
-					break;
-				}
+
+	public boolean winByDiagonalRightUpLeftDown(int x, int y) {
+		int cons = 0;
+		int v = y;
+		for(int i = x + 1; i < board.getWidth(); i++) {
+			v--;
+			if(v < 0) { break; }
+			if(board.pieces[i][v].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
 			}
 		}
-		return false;
+		v = y;
+		for(int i = x - 1; i >= 0; i--) {
+			v++;
+			if(v >= board.getHeight()){
+				break;
+			}
+			if(board.pieces[i][v].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
+			}
+		}
+		return cons == 4;
 	}
 	
-		
+	public boolean winByDiagonalLeftUpRightDown(int x, int y) {
+		int cons = 0;
+		int v = y;
+		for(int i = x - 1; i >= 0; i--) {
+			v--;
+			if(v < 0) { break; }
+			if(board.pieces[i][v].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
+			}
+		}
+		v = y;
+		for(int i = x + 1; i < board.getWidth(); i++) {
+			v++;
+			if(v >= board.getHeight()){
+				break;
+			}
+			if(board.pieces[i][v].getPlayer() == whiteOrBlackTurn) {
+				cons++;
+			}else {
+				break;
+			}
+		}
+		return cons == 4;
+	}
 	public boolean checkEnd(int x, int y) {
 
-		if(winByGoingFiveRight(x, y) || winByGoingFiveLeft(x,y) 
-		|| winByGoingFiveUp(x,y) || winByGoingFiveDown(x,y) 
-		|| userOneCaptures == 5 || userTwoCaptures == 5) {
+		if(winByRowUpDown(x,y) || winByRowLeftRight(x,y) || 
+		   winByDiagonalRightUpLeftDown(x,y) || winByDiagonalLeftUpRightDown(x,y) ||
+			userOneCaptures == 5 || userTwoCaptures == 5) {
 			gameOver = true;
 			return true;
 		}
@@ -205,8 +173,11 @@ public class PenteGL extends GameLogic {
 		int consecutiveWhite = 0;
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
 		//going right
+		if(x == board.getWidth() - 1) {
+			return;
+		}
 		if(whiteOrBlackTurn == 0) { //whites move
-			for(int i = x + 1; i < board.getWidth(); ++i) {
+			for(int i = x+1; i < board.getWidth(); ++i) {
 		    		if(board.pieces[i][y].getPlayer() == 1) { 
 					consecutiveBlack += 1;
 					removalList.add(new Pair(i,y));
@@ -218,10 +189,10 @@ public class PenteGL extends GameLogic {
 				}
 			}
 		}else { //blacks move
-			for(int i = x + 1; i < board.getWidth(); ++i) {
+			for(int i = x+1; i < board.getWidth(); ++i) {
 				if(board.pieces[i][y].getPlayer() == 0) {
 					consecutiveWhite += 1;
-					removalList.add(new Pair(i, y));
+					removalList.add(new Pair(i,y));
 				}else{
 					if(consecutiveWhite == 2 && board.pieces[i][y].getPlayer() == 1) {
 						removeTwo(removalList);
@@ -240,6 +211,9 @@ public class PenteGL extends GameLogic {
 		int consecutiveWhite = 0;
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
 		//going right
+		if(x == 0) {
+			return;
+		}
 		if(whiteOrBlackTurn == 0) { //whites move
 			for(int i = x - 1; i >= 0 ; --i) {
 		    		if(board.pieces[i][y].getPlayer() == 1) { 
@@ -274,13 +248,15 @@ public class PenteGL extends GameLogic {
 		int consecutiveWhite = 0;
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
 		//going right
+		if(y == board.getHeight() - 1) {
+			return; }
 		if(whiteOrBlackTurn == 0) { //whites move
 			for(int i = y + 1; i < board.getHeight(); ++i) {
 		    		if(board.pieces[x][i].getPlayer() == 1) { 
 					consecutiveBlack += 1;
-					removalList.add(new Pair(i,y));
+					removalList.add(new Pair(y,i));
 		    		}else{
-					if(consecutiveBlack == 2 && board.pieces[i][y].getPlayer() == 0) {
+					if(consecutiveBlack == 2 && board.pieces[x][i].getPlayer() == 0) {
 						removeTwo(removalList);
 					}
 					break;
@@ -288,11 +264,12 @@ public class PenteGL extends GameLogic {
 			}
 		}else { //blacks move
 			for(int i = y + 1; i < board.getHeight(); ++i) {
-				if(board.pieces[i][y].getPlayer() == 0) {
+				System.out.printf("x:%d i:%d piece:%d\n", i,y,board.pieces[x][i].getPlayer());
+				if(board.pieces[x][i].getPlayer() == 0) {
 					consecutiveWhite += 1;
-					removalList.add(new Pair(i, y));
+					removalList.add(new Pair(x, i));
 				}else{
-					if(consecutiveWhite == 2 && board.pieces[i][y].getPlayer() == 1) {
+					if(consecutiveWhite == 2 && board.pieces[x][i].getPlayer() == 1) {
 						removeTwo(removalList);
 					}
 					break;
@@ -309,6 +286,9 @@ public class PenteGL extends GameLogic {
 		int consecutiveWhite = 0;
 		ArrayList<Pair> removalList= new ArrayList<Pair>();
 		//going right
+		if(y == 0) {
+			return;
+		}
 		if(whiteOrBlackTurn == 0) { //whites move
 			for(int i = y - 1; i <= 0; --i) {
 		    		if(board.pieces[x][i].getPlayer() == 1) { 
