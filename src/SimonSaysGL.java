@@ -28,7 +28,7 @@ public class SimonSaysGL extends GameLogic
 		return true;
 	}
 	   
-	public String makeMove(int row, int col) { 
+	public ArrayList<Object> makeMove(int row, int col) { 
 
 		System.out.println("TURN = " + turn);
 
@@ -43,12 +43,20 @@ public class SimonSaysGL extends GameLogic
 				player_colors.get(turn).clear();
 				player_colors.get(turn).add(board.pieces[row][col].getIcon());	
 				counters[turn] = true;
+				if (!checkEquals()){
+					end = true;
+					System.out.println("END GAME");
+				}
 			}
 			else{ // add in next color of current player's pattern
 
 				// if have not added up to size of opposing player's pattern to be matched
 				if (player_colors.get(turn).size() < player_colors.get(turn^1).size()){
-					player_colors.get(turn).add(board.pieces[row][col].getIcon());				
+					player_colors.get(turn).add(board.pieces[row][col].getIcon());	
+					if (!checkEquals()){
+						System.out.println("END GAME");
+						end = true;
+					}			
 				}
 				else{
 					// finished attempt to match opposing player's pattern
@@ -81,7 +89,8 @@ public class SimonSaysGL extends GameLogic
 	}
 	   
 	public boolean checkEquals(){
-		return (player_colors.get(0).equals(player_colors.get(1)));
+		int size = player_colors.get(turn).size();
+		return (player_colors.get(turn).equals(player_colors.get(turn^1).subList(0,size)));
 	}
 
 	public boolean checkEnd(){

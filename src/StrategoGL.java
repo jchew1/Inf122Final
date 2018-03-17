@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.ArrayList;
 
 public class StrategoGL extends GameLogic {
 
@@ -96,12 +97,14 @@ public class StrategoGL extends GameLogic {
 	}
 	
 	@Override
-	public String makeMove(int x,int y) {
+	public ArrayList<Object> makeMove(int x,int y) {
 		System.out.println(turn);
 		StrategoPiece targetedPiece = (StrategoPiece) board.pieces[x][y];
 		if(placementPhase0 || placementPhase1){						//placing tiles in setup
-			handlePlacePiece(targetedPiece);
-			return null;
+			ArrayList<Object> result = new ArrayList<Object>();
+			result.add(null);
+			result.add(handlePlacePiece(targetedPiece));
+			return result;
 		}
 		if(!targetedPiece.isTargetable()){		//selecting or targeting water tiles
 			selectedPiece.setSelected(false);
@@ -114,6 +117,7 @@ public class StrategoGL extends GameLogic {
 				selectedPiece.setSelected(true);
 				return null;
 			}
+			return null;
 		}
 		
 		if(targetedPiece.getPlayer() == turn){	//targeting your own piece
@@ -122,9 +126,7 @@ public class StrategoGL extends GameLogic {
 			selectedPiece = targetedPiece;
 			return null;
 		}
-		if(targetedPiece.getPlayer() != turn){
-			return null;
-		}
+		
 /*TODO: handle scout's special movement case
 		if(selectedPiece.getName() == StrategoPieceFactory.SCOUT && isValidScoutMove(selectedPiece, targetedPiece)){
 			movePiece(selectedPiece, targetedPiece);
@@ -133,8 +135,15 @@ public class StrategoGL extends GameLogic {
 */
 		if(isAdjacent(selectedPiece, targetedPiece)){
 			movePiece(selectedPiece, targetedPiece);	//for targeted empty space or enemies
+			selectedPiece.setSelected(false);
+			selectedPiece = null;
 			changeTurn();
-			return null;
+			
+			ArrayList<Object> result = new ArrayList<Object>();
+			result.add(null);
+			result.add("Player Moved");
+
+			return result;
 		}
 
 		return null;
@@ -142,24 +151,24 @@ public class StrategoGL extends GameLogic {
 
 
 	//TODO
-	private void handlePlacePiece(StrategoPiece targetedPiece){
+	private String handlePlacePiece(StrategoPiece targetedPiece){
 		int tpPos[] = board.getPosition(targetedPiece);
 		int tpX = tpPos[0];
 		int tpY = tpPos[1];
 		
 		if(!targetedPiece.isEmpty()){
-			return;
+			return null;
 		}
 		
 		if(placementPhase0){
-			if(tpX < 6){
-				return;
+			if(tpX > 6){
+				return null;
 			}
 			
 			board.pieces[tpX][tpY] =  player0StartingUnits.remove();
 		} else if(placementPhase1){
-			if(tpX > 3){
-				return;
+			if(tpX < 3){
+				return null;
 			}
 			board.pieces[tpX][tpY] = player1StartingUnits.remove();
 		}
@@ -174,10 +183,13 @@ public class StrategoGL extends GameLogic {
 		if (placementPhase0 && player0StartingUnits.isEmpty()){
 			placementPhase0 = false;
 			changeTurn();
+			return "ChangingTurn";
 		} else if(placementPhase1 && player1StartingUnits.isEmpty()){
 			placementPhase1 = false;
 			changeTurn();
+			return "ChangingTurn";
 		}
+		return null;
 	}
 	
 	private void movePiece(StrategoPiece selectedPiece, StrategoPiece targetedPiece){
@@ -219,7 +231,7 @@ public class StrategoGL extends GameLogic {
 				}
 				break;
 			default:
-				if(selectedPiece.getRank() > targetedPiece.getRank()){
+				if(selectedPiece.getRank() < targetedPiece.getRank()){
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
 				} else if (selectedPiece.getRank() == targetedPiece.getRank()){
@@ -229,18 +241,16 @@ public class StrategoGL extends GameLogic {
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 				}
 		}
-		selectedPiece.setHidden(false);
-		targetedPiece.setHidden(false);
-		try {
+		/*try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
-		}
+		}*/
 		selectedPiece.setSelected(false);
 	}
 	
 	private boolean isAdjacent(Piece selectedPiece, Piece targetedPiece){
-		int spPos[] = board.getPosition(selectedPiece);
+/*		int spPos[] = board.getPosition(selectedPiece);
 		int tpPos[] = board.getPosition(targetedPiece);
 		int spX = spPos[0];
 		int spY = spPos[1];
@@ -252,7 +262,8 @@ public class StrategoGL extends GameLogic {
 		if(spY + 1 == tpY || spY - 1 == tpY){
 			return spX == 0;
 		}
-		return false;
+		return false;*/
+		return true;
 	}
 
 	@Override

@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import javax.swing.JOptionPane;
+import java.util.ArrayList;
 
 class BoardTile extends JButton implements ActionListener{
 
@@ -23,19 +24,33 @@ class BoardTile extends JButton implements ActionListener{
 		addActionListener(this);
 		this.setPreferredSize(new Dimension(buttonWidth, buttonHeight));
 		setImage(Driver.game.board.pieces[x][y].getIcon());
-		System.out.println(getWidth());
 	}
 	
 	public void actionPerformed(ActionEvent e){
 		System.out.printf("Tile Pressed %d,%d\n", x, y);
-		String turnMessage = Driver.game.makeMove(x,y);
+		ArrayList<Object> boardChange = Driver.game.makeMove(x,y);
 		setImage(Driver.game.board.pieces[x][y].getIcon());
+		if(boardChange != null){
+			if(boardChange.get(0) != null){
+				Driver.gameGUI.updateTiles((ArrayList<Piece>)boardChange.get(0));
+			}
+			if(boardChange.get(1) != null){
+				Driver.gameGUI.boardPanel.setVisible(false);
+				JOptionPane.showMessageDialog(Driver.gameGUI, boardChange.get(1));
+				Driver.gameGUI.boardPanel.setVisible(true);
+			}
+		}
+		/*
 		Driver.gameGUI.boardPanel.setVisible(false);
-		if(turnMessage != null){
+		if(turnMessage != null && turnMessage.equals("Empty")){ //TODO: quick fix, need to refactor
+			Driver.gameGUI.updateTiles();
+		}else if(turnMessage != null){
 			JOptionPane.showMessageDialog(Driver.gameGUI, turnMessage);
 			Driver.gameGUI.updateTiles();
 		}
 		Driver.gameGUI.boardPanel.setVisible(true);
+		*/
+
 	}
 
 	void setImage(String icon){

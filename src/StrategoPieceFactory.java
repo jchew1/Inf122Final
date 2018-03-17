@@ -62,7 +62,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_1_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_1_R_H.png");
+					piece.setSelectedIcon("Stratego_1_B_H.png");
 				}
 				return piece;
 			case "general":
@@ -74,7 +74,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_2_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_2_R_H.png");
+					piece.setSelectedIcon("Stratego_2_B_H.png");
 				}
 				return piece;
 			case "colonel":
@@ -86,7 +86,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_3_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_3_R_H.png");
+					piece.setSelectedIcon("Stratego_3_B_H.png");
 				}
 				return piece;
 			case "major":
@@ -98,7 +98,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_4_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_4_R_H.png");
+					piece.setSelectedIcon("Stratego_4_B_H.png");
 				}
 				return piece;
 			case "captain":
@@ -110,7 +110,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_5_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_5_R_H.png");
+					piece.setSelectedIcon("Stratego_5_B_H.png");
 				}
 				return piece;
 			case "lieutenant":
@@ -122,7 +122,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_6_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_6_R_H.png");
+					piece.setSelectedIcon("Stratego_6_B_H.png");
 				}
 				return piece;
 			case "sergeant":
@@ -134,7 +134,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_7_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_7_R_H.png");
+					piece.setSelectedIcon("Stratego_7_B_H.png");
 				}
 				return piece;
 			case "miner":
@@ -146,7 +146,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_8_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_8_R_H.png");
+					piece.setSelectedIcon("Stratego_8_B_H.png");
 				}
 				return piece;
 			case "scout":
@@ -158,7 +158,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_9_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_9_R_H.png");
+					piece.setSelectedIcon("Stratego_9_B_H.png");
 				}
 				return piece;
 			case "spy":
@@ -170,7 +170,7 @@ public class StrategoPieceFactory {
 				} else{
 					piece.setIcon("Stratego_S_B.png");
 					piece.setHiddenIcon("Stratego_H_B.png");
-					piece.setSelectedIcon("Stratego_S_R_H.png");
+					piece.setSelectedIcon("Stratego_S_B_H.png");
 				}
 				return piece;
 			default:

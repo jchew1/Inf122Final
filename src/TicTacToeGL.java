@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class TicTacToeGL extends GameLogic
 {
 	int winner;
@@ -71,7 +73,7 @@ public class TicTacToeGL extends GameLogic
 		return board.pieces[x][y].player == -1;
 	}
 	   
-	public String makeMove(int row, int col) {         
+	public ArrayList<Object> makeMove(int row, int col) {         
 		if(checkValidMove(row, col)){
 			board.pieces[row][col].setPlayer(turn);
 			if(checkEnd()){
