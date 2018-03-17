@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 abstract class GameLogic{
 	Board board;
@@ -5,7 +6,9 @@ abstract class GameLogic{
 
 	public abstract void boardConstructor();
 	public abstract boolean checkValidMove(int x, int y);
-	public abstract String makeMove(int x, int y);
+	// makeMove(x,y)[0] = ArrayList<Piece> (changed pieces)
+	// makeMove(x,y)[1] = String (turn message)
+	public abstract ArrayList<Object> makeMove(int x, int y);
 	public abstract boolean checkEnd();
 	public abstract Integer getP1Score();
 	public abstract Integer getP2Score();

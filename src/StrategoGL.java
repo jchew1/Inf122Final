@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.ArrayList;
 
 public class StrategoGL extends GameLogic {
 
@@ -96,31 +97,34 @@ public class StrategoGL extends GameLogic {
 	}
 	
 	@Override
-	public String makeMove(int x,int y) {
+	public ArrayList<Object> makeMove(int x,int y) {
 		System.out.println(turn);
 		StrategoPiece targetedPiece = (StrategoPiece) board.pieces[x][y];
 		if(placementPhase0 || placementPhase1){						//placing tiles in setup
-			return handlePlacePiece(targetedPiece);
+			ArrayList<Object> result = new ArrayList<Object>();
+			result.add(null);
+			result.add(handlePlacePiece(targetedPiece));
+			return result;
 		}
 		if(!targetedPiece.isTargetable()){		//selecting or targeting water tiles
 			selectedPiece.setSelected(false);
 			selectedPiece = null;
-			return "Empty";
+			return null;
 		}
 		if(selectedPiece == null){				//to select a piece
 			if(targetedPiece.isSelectable() && targetedPiece.getPlayer() == turn){
 				selectedPiece = targetedPiece;
 				selectedPiece.setSelected(true);
-				return "Empty";
+				return null;
 			}
-			return "Empty";
+			return null;
 		}
 		
 		if(targetedPiece.getPlayer() == turn){	//targeting your own piece
 			selectedPiece.setSelected(false);
 			targetedPiece.setSelected(true);
 			selectedPiece = targetedPiece;
-			return "Empty";
+			return null;
 		}
 		
 /*TODO: handle scout's special movement case
@@ -134,7 +138,12 @@ public class StrategoGL extends GameLogic {
 			selectedPiece.setSelected(false);
 			selectedPiece = null;
 			changeTurn();
-			return "Player Moved";
+			
+			ArrayList<Object> result = new ArrayList<Object>();
+			result.add(null);
+			result.add("Player Moved");
+
+			return result;
 		}
 
 		return null;

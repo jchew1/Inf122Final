@@ -29,7 +29,7 @@ public class PenteGL extends GameLogic {
 	}
 
 	@Override
-	public String makeMove(int x, int y) {
+	public ArrayList<Object> makeMove(int x, int y) {
 		if(checkValidMove(x,y)) {
 			board.pieces[x][y].setPlayer(whiteOrBlackTurn);
 			checkForCaptureRight(x,y);

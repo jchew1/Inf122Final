@@ -28,7 +28,7 @@ public class SimonSaysGL extends GameLogic
 		return true;
 	}
 	   
-	public String makeMove(int row, int col) { 
+	public ArrayList<Object> makeMove(int row, int col) { 
 
 		System.out.println("TURN = " + turn);
 
