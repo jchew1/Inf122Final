@@ -27,7 +27,8 @@ class Driver{
 		while(true){
 			while(currentGame==null){
 				try{
-					TimeUnit.SECONDS.sleep(1);
+					TimeUnit.MILLISECONDS.sleep(500);
+					System.out.println("currentGameNull");
 				}catch(Exception e){}
 			}
 
@@ -48,7 +49,8 @@ class Driver{
 			gameGUI = new GameGUI(600,600,currentGame, game.getBoardX(), game.getBoardY());
 			while(!game.checkEnd()){
 				try{
-					TimeUnit.SECONDS.sleep(1);
+					TimeUnit.MILLISECONDS.sleep(500);
+					System.out.println("gameNotOver");
 				}catch(Exception e){}
 			}
 			gameGUI.gameComplete();
