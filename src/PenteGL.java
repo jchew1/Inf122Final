@@ -4,14 +4,14 @@ public class PenteGL extends GameLogic {
 	int userOneCaptures;
 	int userTwoCaptures;
 	int whiteOrBlackTurn; //0 if white turn, 1 if black turn but white
-    						  // always goes first
+        int winner;    						  // always goes first
     
 	boolean gameOver = false;
 
 	PenteGL(){
     		turn = 0;            
-    		boardConstructor();
-    }
+		boardConstructor();
+        }
     
 	@Override
 	public void boardConstructor() {
@@ -164,11 +164,13 @@ public class PenteGL extends GameLogic {
 			userOneCaptures == 5 || userTwoCaptures == 5) {
 			if(whiteOrBlackTurn == 1) { System.out.println("Winner is player 2!");};
 			if(whiteOrBlackTurn == 0) { System.out.println("Winner is player 1!");};
-			gameOver = true;
+			winner = whiteOrBlackTurn;
+                        gameOver = true;
 			return true;
 		}
 		if(checkForDraw()) {
 			System.out.println("Draw!");
+                        winner = -1;
 			return true;
 		}
 		return false;
@@ -553,7 +555,8 @@ public class PenteGL extends GameLogic {
 	//Never using this
 	@Override
 	public boolean checkEnd() {return gameOver;}
-	public int getWinner(){return turn;}
+	@Override
+        public int getWinner(){return winner;} //0 = white 1 = black -1 = draw
 	public Integer getP1Score(){return userOneCaptures;}
 	public Integer getP2Score(){return userTwoCaptures;}
 }
