@@ -99,6 +99,6 @@ public class MainMenu extends JFrame{
 		System.out.println("stats button pressed");
 		Driver.user1 = Driver.getUser(p1t.getText());
 		Driver.user2 = Driver.getUser(p2t.getText());
-		//new StatsGUI(Driver.user1, Driver.user2);
+		new StatsGUI(Driver.user1, Driver.user2);
 	}
 }
