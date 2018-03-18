@@ -71,8 +71,6 @@ public class GameGUI extends JFrame{
 
 		scorePanel.add(p1Panel);
 		scorePanel.add(p2Panel);
-
-
 	}
 
 	void setConsolePanel(){
@@ -96,6 +94,7 @@ public class GameGUI extends JFrame{
 	}
 
 	void gameComplete(){
+		System.out.println("gameComplete winner: "+Driver.game.getWinner());
 		switch(Driver.game.getWinner()){
 			case -1:
 				JOptionPane.showMessageDialog(this, "DRAW");

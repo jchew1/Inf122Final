@@ -171,6 +171,7 @@ public class PenteGL extends GameLogic {
 		if(checkForDraw()) {
 			System.out.println("Draw!");
                         winner = -1;
+			gameOver = true;
 			return true;
 		}
 		return false;
