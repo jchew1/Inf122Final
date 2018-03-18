@@ -1,6 +1,8 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class StrategoGL extends GameLogic {
 
@@ -13,7 +15,9 @@ public class StrategoGL extends GameLogic {
 	private boolean placementPhase1 = true;
 	private Queue<StrategoPiece> player0StartingUnits = new LinkedList<StrategoPiece>();
 	private Queue<StrategoPiece> player1StartingUnits = new LinkedList<StrategoPiece>();
+	private ArrayList<StrategoPiece> activeUnits = new ArrayList<StrategoPiece>();
 	private StrategoPiece selectedPiece;
+	
 	
 	public StrategoGL(){
 		turn = 0;
@@ -98,18 +102,27 @@ public class StrategoGL extends GameLogic {
 	
 	@Override
 	public ArrayList<Object> makeMove(int x,int y) {
-		System.out.println(turn);
 		StrategoPiece targetedPiece = (StrategoPiece) board.pieces[x][y];
 		if(placementPhase0 || placementPhase1){						//placing tiles in setup
-			ArrayList<Object> result = new ArrayList<Object>();
+			ArrayList<Object> result = new ArrayList<Object>();	//array of tiles to update, string message
 			result.add(null);
-			result.add(handlePlacePiece(targetedPiece));
+			String message = handlePlacePiece(targetedPiece);
+			result.add(message);
+			if(message != null){
+				result.set(0, activeUnits);
+			}
 			return result;
 		}
 		if(!targetedPiece.isTargetable()){		//selecting or targeting water tiles
+			ArrayList<Object> result = new ArrayList<Object>();	//array of tiles to update, string message
+			ArrayList<StrategoPiece> piecesToBeRefreshed = new ArrayList<StrategoPiece>();
 			selectedPiece.setSelected(false);
+			piecesToBeRefreshed.add(selectedPiece);
 			selectedPiece = null;
-			return null;
+
+			result.add(piecesToBeRefreshed);
+			result.add(null);
+			return result;
 		}
 		if(selectedPiece == null){				//to select a piece
 			if(targetedPiece.isSelectable() && targetedPiece.getPlayer() == turn){
@@ -121,27 +134,41 @@ public class StrategoGL extends GameLogic {
 		}
 		
 		if(targetedPiece.getPlayer() == turn){	//targeting your own piece
+			ArrayList<Object> result = new ArrayList<Object>();	//array of tiles to update, string message
+			ArrayList<StrategoPiece> piecesToBeRefreshed = new ArrayList<StrategoPiece>();
+			piecesToBeRefreshed.add(selectedPiece);
+			piecesToBeRefreshed.add(targetedPiece);
 			selectedPiece.setSelected(false);
 			targetedPiece.setSelected(true);
 			selectedPiece = targetedPiece;
-			return null;
+			result.add(piecesToBeRefreshed);
+			result.add(null);
+			return result;
 		}
 		
-/*TODO: handle scout's special movement case
-		if(selectedPiece.getName() == StrategoPieceFactory.SCOUT && isValidScoutMove(selectedPiece, targetedPiece)){
-			movePiece(selectedPiece, targetedPiece);
-			changeTurn();
-		}
-*/
-		if(isAdjacent(selectedPiece, targetedPiece)){
+		
+		if(isAdjacent(selectedPiece, targetedPiece) || (selectedPiece.getName() == StrategoPieceFactory.SCOUT && isValidScoutMove(selectedPiece, targetedPiece))){
+			int spPos[] = board.getPosition(selectedPiece);
+			int spX = spPos[0];
+			int spY = spPos[1];
+			ArrayList<Object> result = new ArrayList<Object>();	//array of tiles to update, string message
 			movePiece(selectedPiece, targetedPiece);	//for targeted empty space or enemies
 			selectedPiece.setSelected(false);
 			selectedPiece = null;
 			changeTurn();
 			
-			ArrayList<Object> result = new ArrayList<Object>();
-			result.add(null);
-			result.add("Player Moved");
+			ArrayList<StrategoPiece> piecesToBeRefreshed = new ArrayList<StrategoPiece>();
+			piecesToBeRefreshed.addAll(activeUnits);
+			piecesToBeRefreshed.add((StrategoPiece) board.pieces[spX][spY]);
+			
+			result.add(piecesToBeRefreshed);
+			String turnMessage = "";
+			if(turn == 1){
+				turnMessage = "Red";
+			} else{
+				turnMessage = "Blue";
+			}
+			result.add(turnMessage + " Moved");
 
 			return result;
 		}
@@ -150,7 +177,6 @@ public class StrategoGL extends GameLogic {
 	}
 
 
-	//TODO
 	private String handlePlacePiece(StrategoPiece targetedPiece){
 		int tpPos[] = board.getPosition(targetedPiece);
 		int tpX = tpPos[0];
@@ -161,16 +187,19 @@ public class StrategoGL extends GameLogic {
 		}
 		
 		if(placementPhase0){
-			if(tpX > 6){
+			if(tpX > 3){
 				return null;
 			}
-			
-			board.pieces[tpX][tpY] =  player0StartingUnits.remove();
+			StrategoPiece piece = player0StartingUnits.remove();
+			board.pieces[tpX][tpY] = piece;
+			activeUnits.add(piece);
 		} else if(placementPhase1){
-			if(tpX < 3){
+			if(tpX < 6){
 				return null;
 			}
-			board.pieces[tpX][tpY] = player1StartingUnits.remove();
+			StrategoPiece piece = player1StartingUnits.remove();
+			board.pieces[tpX][tpY] = piece;
+			activeUnits.add(piece);
 		}
 			
 			
@@ -201,7 +230,7 @@ public class StrategoGL extends GameLogic {
 		int tpY = tpPos[1];
 		
 		switch(targetedPiece.getName()){
-			case StrategoPieceFactory.EMPTY:			
+			case StrategoPieceFactory.EMPTY:
 				board.pieces[spX][spY] = targetedPiece;
 				board.pieces[tpX][tpY] = selectedPiece;
 				return;
@@ -211,34 +240,50 @@ public class StrategoGL extends GameLogic {
 				} else{
 					player0FlagExists = false;
 				}
+				activeUnits.remove(targetedPiece);
 				board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 				board.pieces[tpX][tpY] = selectedPiece;
+				selectedPiece.setHidden(false);
 				break;
 			case StrategoPieceFactory.BOMB:			
 				if(selectedPiece.getRank() == '7'){
+					activeUnits.remove(targetedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
+					selectedPiece.setHidden(false);
 				}else{
+					activeUnits.remove(selectedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
+					targetedPiece.setHidden(false);
 				}
 				break;
 			case StrategoPieceFactory.MARSHAL:			
 				if(selectedPiece.getRank() == '9'){
+					activeUnits.remove(targetedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
+					selectedPiece.setHidden(false);
 				}else{
+					activeUnits.remove(selectedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
+					targetedPiece.setHidden(false);
 				}
 				break;
 			default:
 				if(selectedPiece.getRank() < targetedPiece.getRank()){
+					activeUnits.remove(targetedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = selectedPiece;
+					selectedPiece.setHidden(false);
 				} else if (selectedPiece.getRank() == targetedPiece.getRank()){
+					activeUnits.remove(targetedPiece);
+					activeUnits.remove(selectedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 					board.pieces[tpX][tpY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
 				} else{
+					activeUnits.remove(selectedPiece);
 					board.pieces[spX][spY] = StrategoPieceFactory.createPiece(StrategoPieceFactory.EMPTY, turn);
+					targetedPiece.setHidden(false);
 				}
 		}
 		/*try {
@@ -250,22 +295,71 @@ public class StrategoGL extends GameLogic {
 	}
 	
 	private boolean isAdjacent(Piece selectedPiece, Piece targetedPiece){
-/*		int spPos[] = board.getPosition(selectedPiece);
+		int spPos[] = board.getPosition(selectedPiece);
 		int tpPos[] = board.getPosition(targetedPiece);
 		int spX = spPos[0];
 		int spY = spPos[1];
 		int tpX = tpPos[0];
 		int tpY = tpPos[1];
 		if(spX + 1 == tpX || spX - 1 == tpX){
-			return spY == 0;
+			return spY == tpY;
 		}
 		if(spY + 1 == tpY || spY - 1 == tpY){
-			return spX == 0;
+			return spX == tpX;
 		}
-		return false;*/
-		return true;
+		return false;
+
 	}
 
+	private boolean isValidScoutMove(Piece selectedPiece, Piece targetedPiece){
+		System.out.println("called");
+		int spPos[] = board.getPosition(selectedPiece);
+		int tpPos[] = board.getPosition(targetedPiece);
+		int spX = spPos[0];
+		int spY = spPos[1];
+		int tpX = tpPos[0];
+		int tpY = tpPos[1];
+		
+		if(spX != tpX && spY != tpY){
+			return false;
+		}
+		
+		if(spX == tpX){
+			if(tpY > spY){
+				for(int y = spY+1; y < tpY; ++y){
+					if(!((StrategoPiece)board.pieces[spX][y]).isEmpty()){
+						return false;
+					}
+				}
+			} else if(tpY < spY){
+				for(int y = spY-1; y < tpY; --y){
+					if(!((StrategoPiece)board.pieces[spX][y]).isEmpty()){
+						return false;
+					}
+				}
+			}
+			((StrategoPiece)selectedPiece).setHidden(false);
+			return true;
+		} else if (spY == tpY){
+			if(tpX > spX){
+				for(int x = spX+1; x < tpX; ++x){
+					if(!((StrategoPiece)board.pieces[x][spY]).isEmpty()){
+						return false;
+					}
+				}
+			} else if(tpX < spX){
+				for(int x = spX-1; x < tpX; --x){
+					if(!((StrategoPiece)board.pieces[x][spY]).isEmpty()){
+						return false;
+					}
+				}
+			}
+			((StrategoPiece)selectedPiece).setHidden(false);
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public boolean checkValidMove(int x, int y) {
 		return true;
