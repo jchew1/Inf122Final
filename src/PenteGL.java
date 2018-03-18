@@ -50,7 +50,7 @@ public class PenteGL extends GameLogic {
 			changeTurn();
 		}
                 piecesWithMessage.add(removalPieces); //add list of pieces removed
-                piecesWithMessage.add("SomeMessage"); //add as string message
+                piecesWithMessage.add(null); //add as string message
 		return piecesWithMessage;
 	}
 	
