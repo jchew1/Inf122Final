@@ -292,7 +292,7 @@ public class PenteGL extends GameLogic {
 			for(int i = y + 1; i < board.getHeight(); ++i) {
 		    		if(board.pieces[x][i].getPlayer() == 1) { 
 					consecutiveBlack += 1;
-					removalList.add(new Pair(y,i));
+					removalList.add(new Pair(x,i));
                                         removalPiece.add(board.pieces[x][i]);
 		    		}else{
 					if(consecutiveBlack == 2 && board.pieces[x][i].getPlayer() == 0) {
