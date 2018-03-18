@@ -40,6 +40,8 @@ class BoardTile extends JButton implements ActionListener{
 				Driver.gameGUI.boardPanel.setVisible(true);
 			}
 		}
+		Driver.gameGUI.updateScore();
+		Driver.gameGUI.updateTurn();
 	}
 
 	void setImage(String icon){

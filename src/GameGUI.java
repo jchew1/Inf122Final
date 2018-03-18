@@ -8,13 +8,20 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.awt.event.WindowEvent;
+import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+import java.awt.Color;
 
 public class GameGUI extends JFrame{
 	
+	final static int sidePanelWidth = 400;
 	JPanel mainPanel = new JPanel();
 	JPanel boardPanel = new JPanel();
 	JPanel scorePanel = new JPanel();
+	JLabel p1Score = new JLabel();
+	JLabel p2Score = new JLabel();
 	JPanel consolePanel = new JPanel();
+	JLabel consoleLabel = new JLabel();
 	ArrayList<ArrayList<BoardTile>> tiles = new ArrayList<ArrayList<BoardTile>>();
 	int boardWidth;
 	int boardHeight;
@@ -23,13 +30,13 @@ public class GameGUI extends JFrame{
 		super(title);
 		this.boardWidth = boardWidth;
 		this.boardHeight = boardHeight;
-		setSize(boardWidth+100, boardHeight);
+		setSize(boardWidth+sidePanelWidth, boardHeight);
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new BorderLayout());
 
-		mainPanel.setSize(boardWidth+100, boardHeight);
+		mainPanel.setSize(boardWidth+sidePanelWidth, boardHeight);
 		mainPanel.setLayout(new BorderLayout());
 
 		setBoardPanel(x, y);
@@ -40,12 +47,14 @@ public class GameGUI extends JFrame{
 		add(mainPanel, BorderLayout.CENTER);
 		setVisible(true);
 
+		updateScore();
+		updateTurn();
+
 	}
 
 	void setBoardPanel(int x, int y){
 		int buttonWidth = boardWidth/x;
 		int buttonHeight = boardHeight/y;
-		System.out.printf("button: %d, %d\n", buttonWidth, buttonHeight);
 		boardPanel.setLayout(new GridLayout(x,y));
 		for(int i=0; i<x; i++){
 			tiles.add(new ArrayList<BoardTile>());
@@ -63,19 +72,58 @@ public class GameGUI extends JFrame{
 		JPanel p1Panel = new JPanel();
 		JPanel p2Panel = new JPanel();
 
+		p1Panel.setLayout(new BoxLayout(p1Panel, BoxLayout.X_AXIS));
+		p2Panel.setLayout(new BoxLayout(p2Panel, BoxLayout.X_AXIS));
+
 		JLabel p1 = new JLabel(Driver.user1.getName()+": ");
+		p1.setFont(new Font("TimesRoman", Font.PLAIN, 24));
 		JLabel p2 = new JLabel(Driver.user2.getName()+": ");
+		p2.setFont(new Font("timesRoman", Font.PLAIN, 24));
+	
+		p1Score.setFont(new Font("TimesRoman", Font.PLAIN, 24));
+		p2Score.setFont(new Font("TimesRoman", Font.PLAIN, 24));
 
 		p1Panel.add(p1);
+		p1Panel.add(p1Score);
 		p2Panel.add(p2);
+		p2Panel.add(p2Score);
+
+		p1Panel.setBorder(new EmptyBorder(0,0,50,0));
+		p2Panel.setBorder(new EmptyBorder(50,0,0,0));
 
 		scorePanel.add(p1Panel);
 		scorePanel.add(p2Panel);
 	}
 
+	void updateScore(){
+		Integer score1 = Driver.game.getP1Score();
+		Integer score2 = Driver.game.getP2Score();
+		System.out.printf("p1: %d\n", score1);
+		System.out.printf("p2: %d\n", score2);
+		if(score1 != null){
+			System.out.println("updating p1 score");
+			p1Score.setText(score1.toString());
+		}
+		if(score2 != null){
+			System.out.println("updating p2 score");
+			p2Score.setText(score2.toString());
+		}
+	}
+
 	void setConsolePanel(){
-		JLabel consoleLabel = new JLabel();
+		consolePanel.setBorder(new EmptyBorder(200, 0,0,0));
+		consoleLabel.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 		consolePanel.add(consoleLabel);
+	}
+
+	void updateTurn(){
+		if(Driver.game.getTurn() == 0){
+			consoleLabel.setText("Turn: "+Driver.user1.getName());
+			consoleLabel.setForeground(Color.RED);
+		}else{
+			consoleLabel.setText("Turn: "+Driver.user2.getName());
+			consoleLabel.setForeground(Color.BLUE);
+		}
 	}
 
 	void setSidePanel(){
