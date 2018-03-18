@@ -54,14 +54,17 @@ class Driver{
 			gameGUI.gameComplete();
 
 			switch(game.getWinner()){
+				// draw
 				case -1: 
 					user1.addStat(currentGame, 0);
 					user2.addStat(currentGame, 0);
 					break;
+				// p1 wins and p2 loses
 				case 0:
 					user1.addStat(currentGame, 1);
 					user2.addStat(currentGame, -1);
 					break;
+				// p2 wins and p1 loses
 				case 1:
 					user1.addStat(currentGame, -1);
 					user2.addStat(currentGame, 1);
