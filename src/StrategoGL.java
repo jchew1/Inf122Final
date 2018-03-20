@@ -311,8 +311,7 @@ public class StrategoGL extends GameLogic {
 
 	}
 
-	private boolean isValidScoutMove(Piece selectedPiece, Piece targetedPiece){
-		System.out.println("called");
+	private boolean isValidScoutMove(StrategoPiece selectedPiece, StrategoPiece targetedPiece){
 		int spPos[] = board.getPosition(selectedPiece);
 		int tpPos[] = board.getPosition(targetedPiece);
 		int spX = spPos[0];
