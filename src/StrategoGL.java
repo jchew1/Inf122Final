@@ -395,9 +395,9 @@ public class StrategoGL extends GameLogic {
 	public Integer getP2Score(){return null;}
 	public int getWinner(){
 		if(!player0FlagExists){
-			return 0;
-		} else {
 			return 1;
+		} else {
+			return 0;
 		}
 	}
 }
